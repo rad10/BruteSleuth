@@ -29,6 +29,9 @@ class LowerAlphaChain:
             if (self.chr_array[i] == "{"):
                 self.chr_array[i] = "a"
                 self.chr_array[i - 1] = chr(ord(self.chr_array[i - 1]) + 1)
+            else:     # I can break because if the current bit doesnt overflow,
+                break # then that means the next bits have no chance of overflowing
+        return curr   # So I can skip all of them
 
 
 class UpperAlphaChain:
