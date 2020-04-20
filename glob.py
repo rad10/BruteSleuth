@@ -3,16 +3,18 @@ import re
 
 test = "test-{0:04}"
 
-lowercase = [chr(a) for a in range(97, 123)] # cheaty way of generating the alphabet
+# cheaty way of generating the alphabet
+lowercase = [chr(a) for a in range(97, 123)]
 uppercase = [chr(a) for a in range(65, 91)]
 digit = [a for a in range(10)]
+
 
 class BruteChain:
     modulus = []
     length = 0
     value = []
 
-    def __init__(self, length:int, data: list):
+    def __init__(self, length: int, data: list):
         self.length = length
         for dictionary in data:
             self.modulus.extend(dictionary)
@@ -43,13 +45,15 @@ class BruteChain:
             if (self.value[i] >= len(self.modulus)):
                 self.value[i - 1] += 1
                 self.value[i] = 0
-            else: # The idea here is that if the current bit doesnt need to be reset
-                break # Then theres no need to continue as nothing else has changed
+            else:  # The idea here is that if the current bit doesnt need to be reset
+                break  # Then theres no need to continue as nothing else has changed
         # Finished
         return curr
 
+
 # Checking if formatting uses id
-use_id = bool(re.match(r'({\d*:[\s\d\w\.\-\_]*\w})|({\d+\+[\w\d\s]{0,1}\d+\w+})'))
+use_id = bool(
+    re.match(r'({\d*:[\s\d\w\.\-\_]*\w})|({\d+\+[\w\d\s]{0,1}\d+\w+})'))
 
 
 # Now properly formatting string
@@ -81,4 +85,3 @@ if use_id:
     for i in custom:
         index, formatting = i.split("+")
         dict_box = []
-        
