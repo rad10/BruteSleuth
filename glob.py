@@ -48,11 +48,24 @@ class BruteChain:
         # Finished
         return curr
 
+# Checking if formatting uses id
+use_id = bool(re.match(r'({\d*:[\s\d\w\.\-\_]*\w})|({\d+\+[\w\d\s]{0,1}\d+\w+})'))
+
 
 # Now properly formatting string
-temp = re.findall(r'{((\d+:)?\d+\w+)}', test)
-formats = list(str(temp))
-gen_list = [None for a in range(len(formats))]
+custom = []
+proper = []
+# {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
+# {[\w\d\s]{0,1}\d+\w+} # string for autoGen
+
+for select in re.findall(r'{[\d+\+]{0,1}[\w\d\s]{0,1}\d+\w+}', test):
+    custom.append(select[0])
+
+
+for select in re.findall(r'{\d*:[\s\d\w\.\-\_]*\w}', test):
+    proper.append(select[0])
+
+
 
 for i in range(len(gen_list)):
     if formats[i].find(":") != -1:
