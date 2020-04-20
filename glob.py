@@ -38,7 +38,7 @@ class UpperAlphaChain:
     length = 0
     chr_array = []
 
-    def __init__(self, length: str):
+    def __init__(self, length: int):
         self.length = length
         self.chr_array = ["A" for a in range(length)]
 
