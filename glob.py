@@ -3,83 +3,50 @@ import re
 
 test = "test-{0:04}"
 
+lowercase = [chr(a) for a in range(97, 123)] # cheaty way of generating the alphabet
+uppercase = [chr(a) for a in range(65, 91)]
+digit = [a for a in range(10)]
 
-class LowerAlphaChain:
+class BruteChain:
+    modulus = []
     length = 0
-    chr_array = []
+    value = []
 
-    def __init__(self, length: int):
+    def __init__(self, length:int, data: list):
         self.length = length
-        self.chr_array = ["a" for a in range(length)]
+        for dictionary in data:
+            self.modulus.extend(dictionary)
+        # making sure no non characters exist
+        for i in range(len(self.modulus)):
+            self.modulus[i] = str(self.modulus[i])
+        # pruning list to only be unique values
+        self.modulus = list(set(self.modulus))
+        self.modulus.sort()
+        self.value = [0 for a in range(length)]
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if (self.chr_array[0] == "{"):
-            self.chr_array = ["a" for a in range(self.length)]
+        # Check to see if at end
+        if (self.value[0] >= len(self.modulus)):
+            self.value = [0 for a in range(self.length)]
             raise StopIteration
-
-        curr = "".join(self.chr_array)
-
-        # increment last char
-        self.chr_array[-1] = chr(ord(self.chr_array[-1]) + 1)
-
-        # incrementing modulus chars
-        for i in range(len(self.chr_array) - 1, 0, -1):
-            if (self.chr_array[i] == "{"):
-                self.chr_array[i] = "a"
-                self.chr_array[i - 1] = chr(ord(self.chr_array[i - 1]) + 1)
-            else:     # I can break because if the current bit doesnt overflow,
-                break # then that means the next bits have no chance of overflowing
-        return curr   # So I can skip all of them
-
-
-class UpperAlphaChain:
-    length = 0
-    chr_array = []
-
-    def __init__(self, length: int):
-        self.length = length
-        self.chr_array = ["A" for a in range(length)]
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if(self.chr_array[0] == "["):
-            self.chr_array = ["A" for a in range(self.length)]
-            raise StopIteration
-
-        curr = "".join(self.chr_array)
-
-        # increment last character
-        self.chr_array[-1] = chr(ord(self.chr_array[-1]) + 1)
-        #incrementing all characters if need be
-        for i in range(len(self.chr_array) - 1, 0, -1):
-            if(self.chr_array[i] == "["):
-                self.chr_array[i - 1] = chr(ord(self.chr_array[i - 1]) + 1)
-                self.chr_array[i] = "A"
-            else:
-                break
+        # Building current string
+        curr = ""
+        for i in self.value:
+            curr += self.modulus[i]
+        # Increment chain
+        self.value[-1] += 1
+        # modulus chain
+        for i in range(self.length - 1, 0, -1):
+            if (self.value[i] >= len(self.modulus)):
+                self.value[i - 1] += 1
+                self.value[i] = 0
+            else: # The idea here is that if the current bit doesnt need to be reset
+                break # Then theres no need to continue as nothing else has changed
+        # Finished
         return curr
-
-class DigitChain:
-    length = 0
-    value = 0
-
-    def __init__(self, length: int):
-        self.length = length
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if (self.value >= 10**self.length):
-            self.value = 0
-            raise StopIteration
-        self.value += 1
-        return self.value - 1
 
 
 # Now properly formatting string
