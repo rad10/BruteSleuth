@@ -1,6 +1,7 @@
 from sys import argv
+import re
 
-mainString = "test-{0:04}"
+test = "test-{0:04}"
 
 
 class LowerAlphaChain:
@@ -79,3 +80,20 @@ class DigitChain:
             raise StopIteration
         self.value += 1
         return self.value - 1
+
+
+# Now properly formatting string
+temp = re.findall(r'{((\d+:)?\d+\w+)}', test)
+formats = list(str(temp))
+gen_list = [None for a in range(len(formats))]
+
+for i in range(len(gen_list)):
+    if formats[i].find(":") != -1:
+        j, mod = formats[i].split(":")
+        if j.isdecimal() or j.isdigit():
+            i = int(j)
+
+        # grabbing length of format
+        for j in range(len(mod)):
+            if not mod[j].isdigit():
+                mod = mod[:j] + mod[j + 1:]
