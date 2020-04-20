@@ -62,3 +62,20 @@ class UpperAlphaChain:
             else:
                 break
         return curr
+
+class DigitChain:
+    length = 0
+    value = 0
+
+    def __init__(self, length: int):
+        self.length = length
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if (self.value >= 10**self.length):
+            self.value = 0
+            raise StopIteration
+        self.value += 1
+        return self.value - 1
