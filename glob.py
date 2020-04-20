@@ -66,14 +66,19 @@ for select in re.findall(r'{\d*:[\s\d\w\.\-\_]*\w}', test):
     proper.append(select[0])
 
 
+# Building generator list
+if not use_id:
+    gen_list = [None for a in range(len(custom) + len(proper))]
+else:
+    # This regex basically selects only the numbers at "{1:" or "{1+" for preprocessing
+    temp = []
+    for pos in re.findall(r'(?<={)\d+(?=(:[\s\d\w\.\-\_]*\w})|(\+[\w\d\s]{0,1}\d+\w+}))', test):
+        temp.append(int(pos[0]))
+    gen_list = [None for a in range(max(temp))]
 
-for i in range(len(gen_list)):
-    if formats[i].find(":") != -1:
-        j, mod = formats[i].split(":")
-        if j.isdecimal() or j.isdigit():
-            i = int(j)
-
-        # grabbing length of format
-        for j in range(len(mod)):
-            if not mod[j].isdigit():
-                mod = mod[:j] + mod[j + 1:]
+# if there are id's, then sort out formal id's first
+if use_id:
+    for i in custom:
+        index, formatting = i.split("+")
+        dict_box = []
+        
