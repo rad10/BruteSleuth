@@ -102,7 +102,7 @@ def init_formatting(test:str):
         temp_list = set()
         for i in temp:
             temp_list.add(int(i[1]))
-        gen_list = [None for a in range(max(temp))]
+        gen_list = [None for a in range(max(temp_list) + 1)]
 
     dict_box = list()
     if use_id:
