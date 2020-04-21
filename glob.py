@@ -170,9 +170,16 @@ def init_formatting(test: str):
 
     return (test, gen_list)
 
-def iterative_printer(format_string: str, generators: list):
-    for i in product(*generators):
-        print(format_string.format(*i))
+
+def iterative_printer(format_string: str, generators: list, regex: str = ""):
+    if regex == "":
+        for i in product(*generators):
+            print(format_string.format(*i))
+    else:
+        reg_filter = re.compile(regex)
+        for i in product(*generators):
+            if bool(re.match(reg_filter, format_string.format(*i))):
+                print(format_string.format(*i))
 
 if __name__ == "__main__":
     setup = init_formatting(argv[1])
