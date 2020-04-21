@@ -126,4 +126,43 @@ if use_id:
             gen_list[i[1]] = BaseChain(8, int(i[3]))
         elif (i[4] == "b"):
             gen_list[i[1]] = BaseChain(2, int(i[3]))
+else:
+    # Sorting format sections first
+    formats = list()
+    index = int()
+    for i in custom:
+        formats.append(i[0])
+    for i in proper:
+        formats.append(i[0])
+    formats.sort(key=test.find)
+    # organizes all formats by which one appear first in the string
+
+    for i in custom:
         dict_box.clear()
+        index = formats.index(i[0])
+        for symbol in i[4].split():
+            if (symbol == "a"):
+                dict_box.append(lowercase)
+            elif (symbol == "A"):
+                dict_box.append(uppercase)
+            elif (symbol == "d"):
+                dict_box.append(digit)
+        gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
+        dict_box.clear()
+        # formatting custom formats to pythonic formatting
+        test = test.replace(i[0], "{{:{0[1]}{0[2]}s}}".format(i), 1)
+        # replace in list incase similar formats exist
+        formats[index] = "{{:{0[1]}{0[2]}s}}".format(i)
+
+    for i in proper:
+        index = formats.index(i[0])
+        if i[4] == "s":
+            continue  # skip strings since they should be custom
+        elif (i[4] == "d" or i[4] == "n"):
+            gen_list[index] = BaseChain(10, int(i[3]))
+        elif (i[4] == "x" or i[4] == "X"):
+            gen_list[index] = BaseChain(16, int(i[3]))
+        elif (i[4] == "o"):
+            gen_list[index] = BaseChain(8, int(i[3]))
+        elif (i[4] == "b"):
+            gen_list[index] = BaseChain(2, int(i[3]))
