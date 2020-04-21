@@ -79,8 +79,16 @@ else:
         temp_list.add(int(i[0]))
     gen_list = [None for a in range(max(temp))]
 
-# if there are id's, then sort out formal id's first
+dict_box = list()
 if use_id:
     for i in custom:
-        index, formatting = i.split("+")
-        dict_box = []
+        dict_box.clear()
+        for symbol in i[2].split():
+            if (symbol == "a"):
+                dict_box.append(lowercase)
+            elif (symbol == "A"):
+                dict_box.append(uppercase)
+            elif (symbol == "d"):
+                dict_box.append(digit)
+        gen_list[i[0]] = BruteChain(i[1], dict_box.copy())
+        dict_box.clear()
