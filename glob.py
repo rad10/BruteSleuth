@@ -57,17 +57,13 @@ use_id = bool(
 
 
 # Now properly formatting string
-custom = []
-proper = []
+custom = list()
+proper = list()
 # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
 # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
 
-for select in re.findall(r'{[\d+\+]{0,1}[\w\d\s]{0,1}\d+\w+}', test):
-    custom.append(select[0])
-
-
-for select in re.findall(r'{\d*:[\s\d\w\.\-\_]*\w}', test):
-    proper.append(select[0])
+custom = re.findall(r'{(?:(\d+)\+)?([\w\d\s]?\d+)(\w+)}', test)
+proper = re.findall(r'{(\d*):([\s\d\w\.\-\_]*\d)(\w)}', test)
 
 
 # Building generator list
