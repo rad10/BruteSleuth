@@ -86,7 +86,8 @@ def init_formatting(test:str):
     # Args are setup as such: full format, id num, filler char, length, format
 
     # This regex grabs every format tag in order of appearance
-    formatList = re.findall(r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))')
+    formatList = re.findall(
+        r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', test)
 
     # determining use of id
     temp = custom
