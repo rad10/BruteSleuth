@@ -139,7 +139,7 @@ def init_formatting(test: str):
         for i in custom:
             dict_box.clear()
             index = formatList.index(i[0])
-            for symbol in i[4].split():
+            for symbol in list(i[4]):
                 if (symbol == "a"):
                     dict_box.append(lowercase)
                 elif (symbol == "A"):
