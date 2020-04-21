@@ -99,11 +99,11 @@ class BaseChain:
         return self.value - 1
 
 
-def init_formatting(test: str):
+def init_formatting(format_string: str):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
     it will need to print every possible string desired.\n
-    @param test the formatted string that gets dissected and corrected\n
+    @param format_string the formatted string that gets dissected and corrected\n
     @return the function returns a tuple with the first object being the corrected
     string, and the second object being a list containing all iteration generators
     in order of which ones will be needed.\n
@@ -122,13 +122,13 @@ def init_formatting(test: str):
     formatList = list()
     # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
     # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
-    custom = re.findall(r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', test)
-    proper = re.findall(r'({(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)})', test)
+    custom = re.findall(r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', format_string)
+    proper = re.findall(r'({(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)})', format_string)
     # Args are setup as such: full format, id num, filler char, length, format
 
     # This regex grabs every format tag in order of appearance
     formatList = re.findall(
-        r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', test)
+        r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', format_string)
 
     # determining use of id
     temp = custom.copy()
@@ -159,7 +159,7 @@ def init_formatting(test: str):
             gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            test = test.replace(i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i), 1)
+            format_string = format_string.replace(i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i), 1)
             formatList[int(i[1])] = ""
 
         for i in proper:
@@ -190,7 +190,7 @@ def init_formatting(test: str):
             gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            test = test.replace(i[0], "{{:{0[2]}{0[3]}s}}".format(i), 1)
+            format_string = format_string.replace(i[0], "{{:{0[2]}{0[3]}s}}".format(i), 1)
             # replace in list incase similar formats exist
             formatList[index] = ""
 
@@ -208,7 +208,7 @@ def init_formatting(test: str):
                 gen_list[index] = BaseChain(2, int(i[3]))
             formatList[index] = ""
 
-    return (test, gen_list)
+    return (format_string, gen_list)
 
 
 def iterative_printer(format_string: str, generators: list, regex: str = ""):
