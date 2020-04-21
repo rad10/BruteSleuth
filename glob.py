@@ -78,11 +78,15 @@ use_id = True
 # Now properly formatting string
 custom = list()
 proper = list()
+formatList = list()
 # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
 # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
 custom = re.findall(r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', test)
 proper = re.findall(r'({(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)})', test)
 # Args are setup as such: full format, id num, filler char, length, format
+
+# This regex grabs every format tag in order of appearance
+formatList = re.findall(r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))')
 
 # determining use of id
 temp = custom
@@ -127,19 +131,11 @@ if use_id:
         elif (i[4] == "b"):
             gen_list[i[1]] = BaseChain(2, int(i[3]))
 else:
-    # Sorting format sections first
-    formats = list()
     index = int()
-    for i in custom:
-        formats.append(i[0])
-    for i in proper:
-        formats.append(i[0])
-    formats.sort(key=test.find)
-    # organizes all formats by which one appear first in the string
 
     for i in custom:
         dict_box.clear()
-        index = formats.index(i[0])
+        index = formatList.index(i[0])
         for symbol in i[4].split():
             if (symbol == "a"):
                 dict_box.append(lowercase)
@@ -152,10 +148,10 @@ else:
         # formatting custom formats to pythonic formatting
         test = test.replace(i[0], "{{:{0[1]}{0[2]}s}}".format(i), 1)
         # replace in list incase similar formats exist
-        formats[index] = "{{:{0[1]}{0[2]}s}}".format(i)
+        formatList[index] = ""
 
     for i in proper:
-        index = formats.index(i[0])
+        index = formatList.index(i[0])
         if i[4] == "s":
             continue  # skip strings since they should be custom
         elif (i[4] == "d" or i[4] == "n"):
@@ -166,3 +162,4 @@ else:
             gen_list[index] = BaseChain(8, int(i[3]))
         elif (i[4] == "b"):
             gen_list[index] = BaseChain(2, int(i[3]))
+        formatList[index] = ""
