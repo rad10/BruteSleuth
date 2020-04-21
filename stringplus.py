@@ -11,6 +11,9 @@ from itertools import product
 lowercase = [chr(a) for a in range(97, 123)]
 uppercase = [chr(a) for a in range(65, 91)]
 digit = [a for a in range(10)]
+symbols = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
+           "_", "+", "=", "<", ">", "/", "?", ":", ";", "\'", "\"",
+           "\\", "[", "]", "{", "}", "|"]
 
 
 class BruteChain:
@@ -122,7 +125,8 @@ def init_formatting(format_string: str):
     formatList = list()
     # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
     # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
-    custom = re.findall(r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', format_string)
+    custom = re.findall(
+        r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', format_string)
     proper = re.findall(r'({(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)})', format_string)
     # Args are setup as such: full format, id num, filler char, length, format
 
@@ -156,10 +160,13 @@ def init_formatting(format_string: str):
                     dict_box.append(uppercase)
                 elif (symbol == "d"):
                     dict_box.append(digit)
+                elif (symbol == "s"):
+                    dict_box.append(symbols)
             gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            format_string = format_string.replace(i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i), 1)
+            format_string = format_string.replace(
+                i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i), 1)
             formatList[int(i[1])] = ""
 
         for i in proper:
@@ -187,10 +194,13 @@ def init_formatting(format_string: str):
                     dict_box.append(uppercase)
                 elif (symbol == "d"):
                     dict_box.append(digit)
+                elif (symbol == "s"):
+                    dict_box.append(symbols)
             gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            format_string = format_string.replace(i[0], "{{:{0[2]}{0[3]}s}}".format(i), 1)
+            format_string = format_string.replace(
+                i[0], "{{:{0[2]}{0[3]}s}}".format(i), 1)
             # replace in list incase similar formats exist
             formatList[index] = ""
 
@@ -266,6 +276,7 @@ if __name__ == "__main__":
         a: Lowercase Alphabet
         A: Uppercase Alphabet
         d: decimal numbers
+        s: Special Characters (!,@,#,$)
         
         More are on the way, but the custom iterators allow any combonation of each other for more unique
         bruteforcing.
@@ -283,7 +294,7 @@ if __name__ == "__main__":
         than a format with a higher value. This can make life easier as the password list continues to grow in size.
         
         Links:
-        [1] https://docs.python.org/3.4/library/string.html#format-string-syntax\n
+        [1] https://docs.python.org/3.4/library/string.html#format-string-syntax
         
         Authoring:
         This program was built by Nicholas Cottrell (Rad10Logic)
