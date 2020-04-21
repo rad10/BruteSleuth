@@ -110,9 +110,21 @@ if use_id:
                 dict_box.append(uppercase)
             elif (symbol == "d"):
                 dict_box.append(digit)
-        gen_list[i[0]] = BruteChain(i[2], dict_box.copy())
+        gen_list[i[0]] = BruteChain(int(i[2]), dict_box.copy())
         dict_box.clear()
         # formatting custom formats to pythonic formatting
-        test.replace("{{{0[0]}+{0[1]}{0[2]}{0[3]}}}".format(i), "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
+        test.replace("{{{0[0]}+{0[1]}{0[2]}{0[3]}}}".format(i),
+                     "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
 
+    for i in proper:
+        if i[3] == "s":
+            continue  # skip strings since they should be custom
+        elif (i[3] == "d" or i[3] == "n"):
+            gen_list[i[0]] = BaseChain(10, int(i[2]))
+        elif (i[3] == "x" or i[3] == "X"):
+            gen_list[i[0]] = BaseChain(16, int(i[2]))
+        elif (i[3] == "o"):
+            gen_list[i[0]] = BaseChain(8, int(i[2]))
+        elif (i[3] == "b"):
+            gen_list[i[0]] = BaseChain(2, int(i[2]))
         dict_box.clear()
