@@ -70,10 +70,10 @@ class BaseChain:
         self.value += 1
         return self.value - 1
 
-def init_formatting(test:str):
+
+def init_formatting(test: str):
     # Checking if formatting uses id
     use_id = True
-
 
     # Now properly formatting string
     custom = list()
