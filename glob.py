@@ -1,5 +1,6 @@
 from sys import argv
 import re
+from itertools import product
 
 test = "test-{0:04}"
 
@@ -168,3 +169,8 @@ def init_formatting(test: str):
             formatList[index] = ""
 
     return (test, gen_list)
+
+def iterative_printer(format_string: str, generators: list):
+    for i in product(*generators):
+        print(format_string.format(*i))
+    
