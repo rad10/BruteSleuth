@@ -80,15 +80,15 @@ custom = list()
 proper = list()
 # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
 # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
-
-custom = re.findall(r'{(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)}', test)
-proper = re.findall(r'{(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)}', test)
+custom = re.findall(r'({(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)})', test)
+proper = re.findall(r'({(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)})', test)
+# Args are setup as such: full format, id num, filler char, length, format
 
 # determining use of id
 temp = custom
 temp.extend(proper)
 for i in temp:  # use id if no first groups are blank
-    use_id *= not i[0] == ""
+    use_id *= not i[1] == ""
 
 # Building generator list
 if not use_id:
@@ -96,35 +96,34 @@ if not use_id:
 else:
     temp_list = set()
     for i in temp:
-        temp_list.add(int(i[0]))
+        temp_list.add(int(i[1]))
     gen_list = [None for a in range(max(temp))]
 
 dict_box = list()
 if use_id:
     for i in custom:
         dict_box.clear()
-        for symbol in i[3].split():
+        for symbol in i[4].split():
             if (symbol == "a"):
                 dict_box.append(lowercase)
             elif (symbol == "A"):
                 dict_box.append(uppercase)
             elif (symbol == "d"):
                 dict_box.append(digit)
-        gen_list[i[0]] = BruteChain(int(i[2]), dict_box.copy())
+        gen_list[i[1]] = BruteChain(int(i[3]), dict_box.copy())
         dict_box.clear()
         # formatting custom formats to pythonic formatting
-        test.replace("{{{0[0]}+{0[1]}{0[2]}{0[3]}}}".format(i),
-                     "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
+        test.replace(i[0], "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
 
     for i in proper:
-        if i[3] == "s":
+        if i[4] == "s":
             continue  # skip strings since they should be custom
-        elif (i[3] == "d" or i[3] == "n"):
-            gen_list[i[0]] = BaseChain(10, int(i[2]))
-        elif (i[3] == "x" or i[3] == "X"):
-            gen_list[i[0]] = BaseChain(16, int(i[2]))
-        elif (i[3] == "o"):
-            gen_list[i[0]] = BaseChain(8, int(i[2]))
-        elif (i[3] == "b"):
-            gen_list[i[0]] = BaseChain(2, int(i[2]))
+        elif (i[4] == "d" or i[4] == "n"):
+            gen_list[i[1]] = BaseChain(10, int(i[3]))
+        elif (i[4] == "x" or i[4] == "X"):
+            gen_list[i[1]] = BaseChain(16, int(i[3]))
+        elif (i[4] == "o"):
+            gen_list[i[1]] = BaseChain(8, int(i[3]))
+        elif (i[4] == "b"):
+            gen_list[i[1]] = BaseChain(2, int(i[3]))
         dict_box.clear()
