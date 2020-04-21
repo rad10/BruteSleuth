@@ -83,12 +83,16 @@ dict_box = list()
 if use_id:
     for i in custom:
         dict_box.clear()
-        for symbol in i[2].split():
+        for symbol in i[3].split():
             if (symbol == "a"):
                 dict_box.append(lowercase)
             elif (symbol == "A"):
                 dict_box.append(uppercase)
             elif (symbol == "d"):
                 dict_box.append(digit)
-        gen_list[i[0]] = BruteChain(i[1], dict_box.copy())
+        gen_list[i[0]] = BruteChain(i[2], dict_box.copy())
+        dict_box.clear()
+        # formatting custom formats to pythonic formatting
+        test.replace("{{{0[0]}+{0[1]}{0[2]}{0[3]}}}".format(i), "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
+
         dict_box.clear()
