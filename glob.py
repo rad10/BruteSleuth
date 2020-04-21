@@ -61,8 +61,8 @@ proper = list()
 # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
 # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
 
-custom = re.findall(r'{(?:(\d+)\+)?([\w\d\s]?\d+)(\w+)}', test)
-proper = re.findall(r'{(\d*):([\s\d\w\.\-\_]*\d)(\w)}', test)
+custom = re.findall(r'{(?:(\d+)\+)?([\w\d\s]*)(\d+)(\w+)}', test)
+proper = re.findall(r'{(\d*):([\s\d\w\.\-\_]*)(\d+)(\w)}', test)
 
 # determining use of id
 temp = custom
