@@ -1,8 +1,11 @@
+#!/usr/bin/python3
+# @author: Nick Cottrell
+# @version: 1.0
+# @date: 04/21/2020
+
 import argparse
 import re
 from itertools import product
-
-test = "test-{0:04}"
 
 # cheaty way of generating the alphabet
 lowercase = [chr(a) for a in range(97, 123)]
@@ -11,6 +14,18 @@ digit = [a for a in range(10)]
 
 
 class BruteChain:
+    """ Bruteforce Chain is an iterative class that provides every permutative
+    combo of a given list and length.\n
+    @param length the number of bits to the iterator\n
+    @param data a list of lists. This is setup so that the iterator can internally
+    combine the lists into a bigger, more refined set of characters to permutate\n
+    @return an iterator that goes through every possible combination of values given
+    in the dataset of given length\n
+    \n
+    @author Nick Cottrell\n
+    @version: 2.1\n
+    @date 04/21/2020
+    """
     modulus = []
     length = 0
     value = []
@@ -53,6 +68,18 @@ class BruteChain:
 
 
 class BaseChain:
+    """ Base Chain is an iterative class that provides every permutative
+    combo of a number system up to a given length.\n
+    @param base the number thats 1 larger than the largest bit value possible. Allows
+    Cheap and easy permutations for octal, binary, decimal, and many others (not hex sadly)\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has base^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 04/21/2020\n
+    """
     base = int()
     length = int()
     value = int()
@@ -73,6 +100,19 @@ class BaseChain:
 
 
 def init_formatting(test: str):
+    """Init Formatting is the function that takes apart the given string and
+    converts it into a legal string while also understanding what permutations
+    it will need to print every possible string desired.\n
+    @param test the formatted string that gets dissected and corrected\n
+    @return the function returns a tuple with the first object being the corrected
+    string, and the second object being a list containing all iteration generators
+    in order of which ones will be needed.\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 04/21/2020\n
+    """
+
     # Checking if formatting uses id
     use_id = True
 
@@ -172,6 +212,18 @@ def init_formatting(test: str):
 
 
 def iterative_printer(format_string: str, generators: list, regex: str = ""):
+    """Iterative Printer is a function that takes the products from the last function
+    and systematically prints out every combination of the desired string.\n
+    @param format_string the correct string that will be the basis of the bruteforce combo\n
+    @param generators a list of iterators that are used for the format string\n
+    @param regex a regex string that can be used to filter through the string combos
+    so that the user can only grab their desired strings is the formatted string isnt
+    specific enough.\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 04/21/2020\n
+    """
     if regex == "":
         for i in product(*generators):
             print(format_string.format(*i))
