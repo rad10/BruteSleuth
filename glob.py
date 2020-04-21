@@ -51,6 +51,26 @@ class BruteChain:
         return curr
 
 
+class BaseChain:
+    base = int()
+    length = int()
+    value = int()
+
+    def __init__(self, base: int, length: int):
+        self.base = base
+        self.length = length
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if (self.value >= self.base ** self.length):
+            self.value = 0
+            raise StopIteration
+        self.value += 1
+        return self.value - 1
+
+
 # Checking if formatting uses id
 use_id = True
 
