@@ -102,11 +102,13 @@ class BaseChain:
         return self.value - 1
 
 
-def init_formatting(format_string: str):
+def init_formatting(format_string: str, Wordlist:list = None):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
     it will need to print every possible string desired.\n
     @param format_string the formatted string that gets dissected and corrected\n
+    @param Wordlist a list of custom words inserted from commandline or as additional
+    args\n
     @return the function returns a tuple with the first object being the corrected
     string, and the second object being a list containing all iteration generators
     in order of which ones will be needed.\n
@@ -162,6 +164,8 @@ def init_formatting(format_string: str):
                     dict_box.append(digit)
                 elif (symbol == "s"):
                     dict_box.append(symbols)
+                elif (symbol == "w" and Wordlist != None):
+                    dict_box.append(Wordlist)
             gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
@@ -196,6 +200,8 @@ def init_formatting(format_string: str):
                     dict_box.append(digit)
                 elif (symbol == "s"):
                     dict_box.append(symbols)
+                elif (symbol == "w" and Wordlist != None):
+                    dict_box.append(Wordlist)
             gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
@@ -259,6 +265,9 @@ if __name__ == "__main__":
         "-r", nargs="?", default="", type=str, metavar="exclusive_regex",
         help="""This arguement takes all the values returned by the program and
         only prints values that perfectly match the regular expression given.""")
+    parser.add_argument(
+        "-w", type=str, nargs=argparse.REMAINDER, metavar="wordlist",
+        help="This is used if you want to iterate with a list of custom words")
 
     parser.epilog = """
         Description of Formatting
@@ -277,6 +286,7 @@ if __name__ == "__main__":
         A: Uppercase Alphabet
         d: decimal numbers
         s: Special Characters (!,@,#,$)
+        w: Custom Wordlist. This format is only available with the -w argument
         
         More are on the way, but the custom iterators allow any combonation of each other for more unique
         bruteforcing.
@@ -301,5 +311,5 @@ if __name__ == "__main__":
         April 4th, 2020"""
 
     args = parser.parse_args()
-    setup = init_formatting(args.fstring)
+    setup = init_formatting(args.fstring, args.w)
     iterative_printer(*setup, args.r)
