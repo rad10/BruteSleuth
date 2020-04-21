@@ -173,4 +173,7 @@ def init_formatting(test: str):
 def iterative_printer(format_string: str, generators: list):
     for i in product(*generators):
         print(format_string.format(*i))
-    
+
+if __name__ == "__main__":
+    setup = init_formatting(argv[1])
+    iterative_printer(*setup)
