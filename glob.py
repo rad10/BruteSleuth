@@ -90,7 +90,7 @@ def init_formatting(test: str):
         r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', test)
 
     # determining use of id
-    temp = custom
+    temp = custom.copy()
     temp.extend(proper)
     for i in temp:  # use id if no first groups are blank
         use_id *= not i[1] == ""
@@ -108,7 +108,7 @@ def init_formatting(test: str):
     if use_id:
         for i in custom:
             dict_box.clear()
-            for symbol in i[4].split():
+            for symbol in list(i[4]):
                 if (symbol == "a"):
                     dict_box.append(lowercase)
                 elif (symbol == "A"):
@@ -118,7 +118,8 @@ def init_formatting(test: str):
             gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            test = test.replace(i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i))
+            test = test.replace(i[0], "{{{0[1]}:{0[2]}{0[3]}s}}".format(i), 1)
+            formatList[int(i[1])] = ""
 
         for i in proper:
             if i[4] == "s":
@@ -131,6 +132,7 @@ def init_formatting(test: str):
                 gen_list[int(i[1])] = BaseChain(8, int(i[3]))
             elif (i[4] == "b"):
                 gen_list[int(i[1])] = BaseChain(2, int(i[3]))
+            formatList[int(i[1])] = ""
     else:
         index = int()
 
