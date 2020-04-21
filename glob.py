@@ -52,8 +52,7 @@ class BruteChain:
 
 
 # Checking if formatting uses id
-use_id = bool(
-    re.match(r'({\d*:[\s\d\w\.\-\_]*\w})|({\d+\+[\w\d\s]{0,1}\d+\w+})'))
+use_id = True
 
 
 # Now properly formatting string
@@ -65,15 +64,19 @@ proper = list()
 custom = re.findall(r'{(?:(\d+)\+)?([\w\d\s]?\d+)(\w+)}', test)
 proper = re.findall(r'{(\d*):([\s\d\w\.\-\_]*\d)(\w)}', test)
 
+# determining use of id
+temp = custom
+temp.extend(proper)
+for i in temp:  # use id if no first groups are blank
+    use_id *= not i[0] == ""
 
 # Building generator list
 if not use_id:
     gen_list = [None for a in range(len(custom) + len(proper))]
 else:
-    # This regex basically selects only the numbers at "{1:" or "{1+" for preprocessing
-    temp = []
-    for pos in re.findall(r'(?<={)\d+(?=(:[\s\d\w\.\-\_]*\w})|(\+[\w\d\s]{0,1}\d+\w+}))', test):
-        temp.append(int(pos[0]))
+    temp_list = set()
+    for i in temp:
+        temp_list.add(int(i[0]))
     gen_list = [None for a in range(max(temp))]
 
 # if there are id's, then sort out formal id's first
