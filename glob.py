@@ -118,7 +118,7 @@ def init_formatting(test: str):
             gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
-            test.replace(i[0], "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
+            test = test.replace(i[0], "{{{0[0]}:{0[1]}{0[2]}s}}".format(i))
 
         for i in proper:
             if i[4] == "s":
