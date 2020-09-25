@@ -8,12 +8,12 @@ import re
 from itertools import product
 
 # cheaty way of generating the alphabet
-lowercase = [chr(a) for a in range(97, 123)]
-uppercase = [chr(a) for a in range(65, 91)]
-digit = [a for a in range(10)]
-symbols = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
-           "_", "+", "=", "<", ">", "/", "?", ":", ";", "\'", "\"",
-           "\\", "[", "]", "{", "}", "|"]
+lowercase: [str] = [chr(a) for a in range(97, 123)]
+uppercase: [str] = [chr(a) for a in range(65, 91)]
+digit: [int] = [a for a in range(10)]
+symbols: [str] = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
+                  "_", "+", "=", "<", ">", "/", "?", ":", ";", "\'", "\"",
+                  "\\", "[", "]", "{", "}", "|"]
 
 
 class BruteChain:
@@ -29,9 +29,9 @@ class BruteChain:
     @version: 2.1\n
     @date 04/21/2020
     """
-    modulus = []
-    length = 0
-    value = []
+    modulus: list = []
+    length: int = 0
+    value: list = []
 
     def __init__(self, length: int, data: list):
         self.length = length
@@ -48,13 +48,13 @@ class BruteChain:
     def __iter__(self):
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         # Check to see if at end
         if (self.value[0] >= len(self.modulus)):
             self.value = [0 for a in range(self.length)]
             raise StopIteration
         # Building current string
-        curr = ""
+        curr: str = str()
         for i in self.value:
             curr += self.modulus[i]
         # Increment chain
@@ -83,9 +83,9 @@ class BaseChain:
     @version: 1.0\n
     @date 04/21/2020\n
     """
-    base = int()
-    length = int()
-    value = int()
+    base: int = int()
+    length: int = int()
+    value: int = int()
 
     def __init__(self, base: int, length: int):
         self.base = base
@@ -94,7 +94,7 @@ class BaseChain:
     def __iter__(self):
         return self
 
-    def __next__(self):
+    def __next__(self) -> int:
         if (self.value >= self.base ** self.length):
             self.value = 0
             raise StopIteration
@@ -102,7 +102,7 @@ class BaseChain:
         return self.value - 1
 
 
-def init_formatting(format_string: str, Wordlist:list = None):
+def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
     it will need to print every possible string desired.\n
@@ -119,12 +119,12 @@ def init_formatting(format_string: str, Wordlist:list = None):
     """
 
     # Checking if formatting uses id
-    use_id = True
+    use_id: bool = True
 
     # Now properly formatting string
-    custom = list()
-    proper = list()
-    formatList = list()
+    custom: list = list()
+    proper: list = list()
+    formatList: list = list()
     # {\d*:[\s\d\w\.\-\_]*\w} # get officially formatted
     # {[\w\d\s]{0,1}\d+\w+} # string for autoGen
     custom = re.findall(
@@ -137,7 +137,7 @@ def init_formatting(format_string: str, Wordlist:list = None):
         r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', format_string)
 
     # determining use of id
-    temp = custom.copy()
+    temp: list = custom.copy()
     temp.extend(proper)
     for i in temp:  # use id if no first groups are blank
         use_id *= not i[1] == ""
@@ -186,7 +186,7 @@ def init_formatting(format_string: str, Wordlist:list = None):
                 gen_list[int(i[1])] = BaseChain(2, int(i[3]))
             formatList[int(i[1])] = ""
     else:
-        index = int()
+        index: int = int()
 
         for i in custom:
             dict_box.clear()
