@@ -319,5 +319,9 @@ if __name__ == "__main__":
         April 4th, 2020"""
 
     args = parser.parse_args()
+    if (args.wordlist != None):
+        if args.w == None:
+            args.w = list()
+        args.w.extend(args.wordlist.read().split("\n"))
     setup = init_formatting(args.fstring, args.w)
     iterative_printer(*setup, args.r)
