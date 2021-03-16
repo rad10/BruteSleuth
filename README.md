@@ -15,8 +15,14 @@ lowercase, uppercase, and number characters for iteration. As of right now, the 
 formats available are:
 
 > a: Lowercase Alphabet
+
 > A: Uppercase Alphabet
-> d: decimal numbers
+
+> d: Decimal Numbers
+
+> s: Special Characters (!,@,#,$)
+
+> w: Custom Wordlist. This format is only available with the -w argument
 
 More are on the way, but the custom iterators allow any combonation of each other for more unique
 bruteforcing.
