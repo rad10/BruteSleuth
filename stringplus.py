@@ -6,6 +6,7 @@
 import argparse
 import re
 from itertools import product
+from sys import stdin
 
 # cheaty way of generating the alphabet
 lowercase: [str] = [chr(a) for a in range(97, 123)]
@@ -265,10 +266,16 @@ if __name__ == "__main__":
         "-r", nargs="?", default="", type=str, metavar="exclusive_regex",
         help="""This arguement takes all the values returned by the program and
         only prints values that perfectly match the regular expression given.""")
-    parser.add_argument(
+
+    wordlistHeader = parser.add_argument_group(
+        "Wordlists", "These commands are for adding entire wordlists to the commandchain")
+    wordlistGroup = wordlistHeader.add_mutually_exclusive_group()
+    wordlistGroup.add_help = True
+    wordlistGroup.add_argument(
         "-w", type=str, nargs=argparse.REMAINDER, metavar="wordlist",
         help="This is used if you want to iterate with a list of custom words")
-
+    wordlistGroup.add_argument("--wordlist", metavar="wordlists.txt",
+                               nargs="?", type=argparse.FileType("r"), default=None, const=stdin, help="Allows you to provide a file instead of adding your words to the end of the program. Separate them with newlines")
     parser.epilog = """
         Description of Formatting
         This script works with official python formatting. For more information on proper python
