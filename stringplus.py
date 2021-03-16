@@ -30,12 +30,13 @@ class BruteChain:
     @version: 2.1\n
     @date 04/21/2020
     """
-    modulus: list = []
-    length: int = 0
-    value: list = []
+    modulus: list = None
+    length: int = None
+    value: list = None
 
     def __init__(self, length: int, data: list):
         self.length = length
+        self.modulus = list()
         for dictionary in data:
             self.modulus.extend(dictionary)
         # making sure no non characters exist
@@ -272,7 +273,7 @@ if __name__ == "__main__":
     wordlistGroup = wordlistHeader.add_mutually_exclusive_group()
     wordlistGroup.add_help = True
     wordlistGroup.add_argument(
-        "-w", type=str, nargs=argparse.REMAINDER, metavar="wordlist",
+        "-w", type=str, nargs=argparse.REMAINDER, metavar="wordlist", default=None,
         help="This is used if you want to iterate with a list of custom words")
     wordlistGroup.add_argument("--wordlist", metavar="wordlists.txt",
                                nargs="?", type=argparse.FileType("r"), default=None, const=stdin, help="Allows you to provide a file instead of adding your words to the end of the program. Separate them with newlines")
