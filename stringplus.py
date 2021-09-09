@@ -7,14 +7,10 @@ import argparse
 import re
 from itertools import product
 from sys import stdin
-
-# cheaty way of generating the alphabet
-lowercase: [str] = [chr(a) for a in range(97, 123)]
-uppercase: [str] = [chr(a) for a in range(65, 91)]
-digit: [int] = [a for a in range(10)]
-symbols: [str] = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
-                  "_", "+", "=", "<", ">", "/", "?", ":", ";", "\'", "\"",
-                  "\\", "[", "]", "{", "}", "|"]
+from string import ascii_lowercase as lowercase
+from string import ascii_uppercase as uppercase
+from string import punctuation as symbols
+from string import digits as digit
 
 
 class BruteChain:
