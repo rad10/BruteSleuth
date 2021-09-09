@@ -100,6 +100,82 @@ class BaseChain:
         return self.value - 1
 
 
+class DecimalChain(BaseChain):
+    """ Decimal Chain is an iterative class that provides every permutative
+    combo of decimal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 10^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(10, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
+class HexadecimalChain(BaseChain):
+    """ Hexadecimal Chain is an iterative class that provides every permutative
+    combo of hexadecimal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 16^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(16, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}x}"
+
+
+class OctalChain(BaseChain):
+    """ Octal Chain is an iterative class that provides every permutative
+    combo of octal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 8^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(8, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
+class BinaryChain(BaseChain):
+    """ Binary Chain is an iterative class that provides every permutative
+    combo of 1 and 0 up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 2^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(2, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
 def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
