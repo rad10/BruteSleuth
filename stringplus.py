@@ -289,16 +289,16 @@ if __name__ == "__main__":
         of 4 characters long using lowercase letters. {5aAd} is a 5 character long iterator using
         lowercase, uppercase, and number characters for iteration. As of right now, the current custom
         formats available are:
-        
+
         a: Lowercase Alphabet
         A: Uppercase Alphabet
         d: decimal numbers
         s: Special Characters (!,@,#,$)
         w: Custom Wordlist. This format is only available with the -w argument
-        
+
         More are on the way, but the custom iterators allow any combonation of each other for more unique
         bruteforcing.
-        
+
         ID Tags
         in official python formatting, these are the numbers before a colon that tell the format function
         which parameter to use per format tag. Examples such as {0:04d}, which to python says that the first
@@ -310,10 +310,10 @@ if __name__ == "__main__":
         positives and less passwords to generate, which means it runs faster. The other advantage is you can
         prioritize portions of the unknown password. formats with smaller ID's will change value far less often
         than a format with a higher value. This can make life easier as the password list continues to grow in size.
-        
+
         Links:
         [1] https://docs.python.org/3.4/library/string.html#format-string-syntax
-        
+
         Authoring:
         This program was built by Nicholas Cottrell (Rad10Logic)
         April 4th, 2020"""
