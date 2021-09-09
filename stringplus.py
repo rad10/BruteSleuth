@@ -34,7 +34,7 @@ class BruteChain:
     length: int = None
     value: list = None
 
-    def __init__(self, length: int, data: list):
+    def __init__(self, length: int, *data: list):
         self.length = length
         self.modulus = list()
         for dictionary in data:
@@ -168,7 +168,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(symbols)
                 elif (symbol == "w" and Wordlist != None):
                     dict_box.append(Wordlist)
-            gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
+            gen_list[int(i[1])] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
             format_string = format_string.replace(
@@ -204,7 +204,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(symbols)
                 elif (symbol == "w" and Wordlist != None):
                     dict_box.append(Wordlist)
-            gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
+            gen_list[index] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
             format_string = format_string.replace(
