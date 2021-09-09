@@ -280,6 +280,15 @@ if __name__ == "__main__":
         This program also works with custom formatting of its own design. This was implemented so
         that iteration using multiple unique character sets was possible.
 
+        Pythonic Formatting
+        As stated, this program works with the majority of formatting that can be done in python.
+        What this means is that you can input almost any string into the programs formatter that
+        will work in a python f-string or string.format function. As such, "{0:4d}" will use the
+        first generator to iterate through 4 base 10 digits in the chain. Currently only digit
+        based filters work (though they are for the most part the only bits that will make sense)
+        but this means that "{2x}" for 2 hex characters will work, as well as "{0:08b}" and "{0:3o}"
+        and other formats that can be iterated may be added in the near future.
+
         Custom Formatting
         An example of a unique character set would be "{4a}", which is a custom combo of an iterator
         of 4 characters long using lowercase letters. {5aAd} is a 5 character long iterator using
