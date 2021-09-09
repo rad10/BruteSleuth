@@ -7,14 +7,10 @@ import argparse
 import re
 from itertools import product
 from sys import stdin
-
-# cheaty way of generating the alphabet
-lowercase: [str] = [chr(a) for a in range(97, 123)]
-uppercase: [str] = [chr(a) for a in range(65, 91)]
-digit: [int] = [a for a in range(10)]
-symbols: [str] = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-",
-                  "_", "+", "=", "<", ">", "/", "?", ":", ";", "\'", "\"",
-                  "\\", "[", "]", "{", "}", "|"]
+from string import ascii_lowercase as lowercase
+from string import ascii_uppercase as uppercase
+from string import punctuation as symbols
+from string import digits as digit
 
 
 class BruteChain:
@@ -34,7 +30,7 @@ class BruteChain:
     length: int = None
     value: list = None
 
-    def __init__(self, length: int, data: list):
+    def __init__(self, length: int, *data: list):
         self.length = length
         self.modulus = list()
         for dictionary in data:
@@ -104,6 +100,82 @@ class BaseChain:
         return self.value - 1
 
 
+class DecimalChain(BaseChain):
+    """ Decimal Chain is an iterative class that provides every permutative
+    combo of decimal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 10^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(10, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
+class HexadecimalChain(BaseChain):
+    """ Hexadecimal Chain is an iterative class that provides every permutative
+    combo of hexadecimal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 16^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(16, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}x}"
+
+
+class OctalChain(BaseChain):
+    """ Octal Chain is an iterative class that provides every permutative
+    combo of octal numbers up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 8^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(8, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
+class BinaryChain(BaseChain):
+    """ Binary Chain is an iterative class that provides every permutative
+    combo of 1 and 0 up to a given length.\n
+    @param length the number of bits to the iterator\n
+    @return an iterator that goes through every possible combination of values given
+    from the base and the length. the iterator has 2^length values in total\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.0\n
+    @date 09/09/2021\n
+    """
+
+    def __init__(self, length: int):
+        super().__init__(2, length)
+
+    def __next__(self) -> str:
+        return f"{super().__next__():0{self.length}d}"
+
+
 def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
@@ -168,7 +240,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(symbols)
                 elif (symbol == "w" and Wordlist != None):
                     dict_box.append(Wordlist)
-            gen_list[int(i[1])] = BruteChain(int(i[3]), dict_box.copy())
+            gen_list[int(i[1])] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
             format_string = format_string.replace(
@@ -204,7 +276,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(symbols)
                 elif (symbol == "w" and Wordlist != None):
                     dict_box.append(Wordlist)
-            gen_list[index] = BruteChain(int(i[3]), dict_box.copy())
+            gen_list[index] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
             # formatting custom formats to pythonic formatting
             format_string = format_string.replace(
@@ -284,21 +356,30 @@ if __name__ == "__main__":
         This program also works with custom formatting of its own design. This was implemented so
         that iteration using multiple unique character sets was possible.
 
+        Pythonic Formatting
+        As stated, this program works with the majority of formatting that can be done in python.
+        What this means is that you can input almost any string into the programs formatter that
+        will work in a python f-string or string.format function. As such, "{0:4d}" will use the
+        first generator to iterate through 4 base 10 digits in the chain. Currently only digit
+        based filters work (though they are for the most part the only bits that will make sense)
+        but this means that "{2x}" for 2 hex characters will work, as well as "{0:08b}" and "{0:3o}"
+        and other formats that can be iterated may be added in the near future.
+
         Custom Formatting
         An example of a unique character set would be "{4a}", which is a custom combo of an iterator
         of 4 characters long using lowercase letters. {5aAd} is a 5 character long iterator using
         lowercase, uppercase, and number characters for iteration. As of right now, the current custom
         formats available are:
-        
+
         a: Lowercase Alphabet
         A: Uppercase Alphabet
         d: decimal numbers
         s: Special Characters (!,@,#,$)
         w: Custom Wordlist. This format is only available with the -w argument
-        
+
         More are on the way, but the custom iterators allow any combonation of each other for more unique
         bruteforcing.
-        
+
         ID Tags
         in official python formatting, these are the numbers before a colon that tell the format function
         which parameter to use per format tag. Examples such as {0:04d}, which to python says that the first
@@ -310,10 +391,10 @@ if __name__ == "__main__":
         positives and less passwords to generate, which means it runs faster. The other advantage is you can
         prioritize portions of the unknown password. formats with smaller ID's will change value far less often
         than a format with a higher value. This can make life easier as the password list continues to grow in size.
-        
+
         Links:
         [1] https://docs.python.org/3.4/library/string.html#format-string-syntax
-        
+
         Authoring:
         This program was built by Nicholas Cottrell (Rad10Logic)
         April 4th, 2020"""
