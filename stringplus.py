@@ -67,6 +67,9 @@ class BruteChain:
         # Finished
         return curr
 
+    def __len__(self):
+        return len(self.modulus) ** self.length
+
 
 class BaseChain:
     """ Base Chain is an iterative class that provides every permutative
@@ -98,6 +101,9 @@ class BaseChain:
             raise StopIteration
         self.value += 1
         return self.value - 1
+
+    def __len__(self):
+        return self.base ** self.length
 
 
 class DecimalChain(BaseChain):
