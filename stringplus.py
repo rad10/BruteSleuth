@@ -334,6 +334,16 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     return (format_string, gen_list)
 
 
+def get_string_variations(format_string: str, string: str) -> tuple:
+    """Gets the varying values from within a password
+    @param format_string the python formatting string used to created given variations
+    @param string the string to collect varying values.
+    """
+    # start by making a regex string based on python formatting
+    regex_string = re.sub(r"\{\:(\d*)\w\}", r"(.{\1})", format_string)
+    return re.findall(regex_string, string)[0]
+
+
 def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
     and systematically prints out every combination of the desired string.\n
