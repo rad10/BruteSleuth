@@ -320,13 +320,11 @@ def iterative_printer(format_string: str, generators: list, regex: str = ""):
     @version: 1.0\n
     @date 04/21/2020\n
     """
-    if regex == "":
-        for i in product(*generators):
-            print(format_string.format(*i))
-    else:
+    if regex != "":
         reg_filter = re.compile(regex)
+
         for i in product(*generators):
-            if bool(re.match(reg_filter, format_string.format(*i))):
+        if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
                 print(format_string.format(*i))
 
 
