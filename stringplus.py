@@ -344,6 +344,22 @@ def get_string_variations(format_string: str, string: str) -> tuple:
     return re.findall(regex_string, string)[0]
 
 
+def set_position(format_string: str, starting_string: str, generators: list) -> list:
+    """Sets the position of the password to the given value.
+    """
+    # Collecting variations between generators
+    values = get_string_variations(format_string, starting_string)
+
+    # setting each portion
+    for i in range(len(generators)):
+        if type(generators[i]) == BruteChain:
+            generators[i].setIndex(values[i])
+        else:
+            generators[i].setIndex(int(values[i]))
+
+    return generators
+
+
 def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
     and systematically prints out every combination of the desired string.\n
