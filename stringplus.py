@@ -221,8 +221,6 @@ class iterative_product:
     def __iter__(self):
         if len(self.hold) == 0:
             return
-        elif len(self.hold) == 1:
-            return self.hold[0]
         else:
             return self
 
