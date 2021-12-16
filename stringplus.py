@@ -329,10 +329,10 @@ def iterative_printer(format_string: str, generators: list, regex: str = "", lim
         if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
             print(format_string.format(*i))
             if limit:
-                if count == limit:
-                    return
-                elif count < limit:
+                if count < limit:
                     count += 1
+                if count >= limit:
+                    return
 
 
 if __name__ == "__main__":
