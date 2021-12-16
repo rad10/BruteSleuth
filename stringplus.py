@@ -5,12 +5,12 @@
 
 import argparse
 import re
-from itertools import product
 from sys import stdin
 from string import ascii_lowercase as lowercase
 from string import ascii_uppercase as uppercase
 from string import punctuation as symbols
 from string import digits as digit
+from math import prod
 
 
 class BruteChain:
@@ -209,6 +209,49 @@ class BinaryChain(BaseChain):
         return f"{super().__next__():0{self.length}d}"
 
 
+class iterative_product:
+    def __init__(self, *iterators) -> None:
+        self.hold = iterators
+        self.memory = [a.__next__() for a in iterators]
+        self.firstRun = True
+
+    def __len__(self) -> int:
+        return prod(map(lambda x: len(x), self.hold))
+
+    def __iter__(self):
+        if len(self.hold) == 0:
+            return
+        elif len(self.hold) == 1:
+            return self.hold[0]
+        else:
+            return self
+
+    def __next__(self) -> tuple:
+        # checking if its the first time being run
+        if self.firstRun:
+            self.firstRun = False
+            return tuple(self.memory)
+
+        index = len(self.hold) - 1
+        nudgeStep = True
+
+        while nudgeStep and index >= 0:
+            try:
+                self.memory[index] = self.hold[index].__next__()
+                nudgeStep = False
+            except StopIteration:
+                # if reached the end, reset current step to first bit then nudge
+                self.memory[index] = self.hold[index].__next__()
+                index -= 1
+                nudgeStep = True
+
+        # if the index is -1, the last nudge as gone full circle, ending all possible permutations
+        if index == -1:
+            raise StopIteration
+
+        return tuple(self.memory)
+
+
 def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
@@ -378,7 +421,7 @@ def iterative_printer(format_string: str, generators: list, regex: str = "", lim
     if limit:
         count = 0
 
-    for i in product(*generators):
+    for i in iterative_product(*generators):
         if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
             print(format_string.format(*i))
             if limit:
