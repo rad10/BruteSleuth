@@ -70,6 +70,22 @@ class BruteChain:
     def __len__(self):
         return len(self.modulus) ** self.length
 
+    def setIndex(self, value: str) -> None:
+        """Set the value that the iterator is currently at. Will raise exceptions if
+        input isnt long enough or contains characters not within the dictionary
+        """
+        # Check that values are correct length
+        if len(value) != len(self.value):
+            raise IndexError
+        # Check that values within values are contained within dictionary
+        for char in value:
+            if char not in self.modulus:
+                raise ValueError
+
+        # setting values from given value
+        for i in range(len(value)):
+            self.value[i] = self.modulus.index(value[i])
+
 
 class BaseChain:
     """ Base Chain is an iterative class that provides every permutative
@@ -104,6 +120,17 @@ class BaseChain:
 
     def __len__(self):
         return self.base ** self.length
+
+    def setIndex(self, value: int) -> None:
+        """Set the value that the iterator is currently at. Will raise exceptions if
+        input is larger than the iterators length
+        """
+        # Checking if value is past length
+        if value >= self.__len__():
+            raise IndexError
+
+        # set the value. Easy peasy
+        self.value = value
 
 
 class DecimalChain(BaseChain):
