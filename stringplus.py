@@ -307,7 +307,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     return (format_string, gen_list)
 
 
-def iterative_printer(format_string: str, generators: list, regex: str = ""):
+def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
     and systematically prints out every combination of the desired string.\n
     @param format_string the correct string that will be the basis of the bruteforce combo\n
@@ -322,10 +322,17 @@ def iterative_printer(format_string: str, generators: list, regex: str = ""):
     """
     if regex != "":
         reg_filter = re.compile(regex)
+    if limit:
+        count = 0
 
-        for i in product(*generators):
+    for i in product(*generators):
         if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
-                print(format_string.format(*i))
+            print(format_string.format(*i))
+            if limit:
+                if count == limit:
+                    return
+                elif count < limit:
+                    count += 1
 
 
 if __name__ == "__main__":
@@ -343,6 +350,9 @@ if __name__ == "__main__":
         "-r", nargs="?", default="", type=str, metavar="exclusive_regex",
         help="""This arguement takes all the values returned by the program and
         only prints values that perfectly match the regular expression given.""")
+
+    parser.add_argument("-l", "--limit", type=int, metavar="limitNum", default=None,
+                        help="Add a limit to the number of passwords printed out. Will only print up to X passwords.")
 
     wordlistHeader = parser.add_argument_group(
         "Wordlists", "These commands are for adding entire wordlists to the commandchain")
@@ -409,4 +419,4 @@ if __name__ == "__main__":
             args.w = list()
         args.w.extend(args.wordlist.read().split("\n"))
     setup = init_formatting(args.fstring, args.w)
-    iterative_printer(*setup, args.r)
+    iterative_printer(*setup, regex=args.r, limit=args.limit)
