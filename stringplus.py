@@ -70,6 +70,22 @@ class BruteChain:
     def __len__(self):
         return len(self.modulus) ** self.length
 
+    def setIndex(self, value: str) -> None:
+        """Set the value that the iterator is currently at. Will raise exceptions if
+        input isnt long enough or contains characters not within the dictionary
+        """
+        # Check that values are correct length
+        if len(value) != len(self.value):
+            raise IndexError
+        # Check that values within values are contained within dictionary
+        for char in value:
+            if char not in self.modulus:
+                raise ValueError
+
+        # setting values from given value
+        for i in range(len(value)):
+            self.value[i] = self.modulus.index(value[i])
+
 
 class BaseChain:
     """ Base Chain is an iterative class that provides every permutative
@@ -104,6 +120,17 @@ class BaseChain:
 
     def __len__(self):
         return self.base ** self.length
+
+    def setIndex(self, value: int) -> None:
+        """Set the value that the iterator is currently at. Will raise exceptions if
+        input is larger than the iterators length
+        """
+        # Checking if value is past length
+        if value >= self.__len__():
+            raise IndexError
+
+        # set the value. Easy peasy
+        self.value = value
 
 
 class DecimalChain(BaseChain):
@@ -307,7 +334,33 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     return (format_string, gen_list)
 
 
-def iterative_printer(format_string: str, generators: list, regex: str = ""):
+def get_string_variations(format_string: str, string: str) -> tuple:
+    """Gets the varying values from within a password
+    @param format_string the python formatting string used to created given variations
+    @param string the string to collect varying values.
+    """
+    # start by making a regex string based on python formatting
+    regex_string = re.sub(r"\{\:(\d*)\w\}", r"(.{\1})", format_string)
+    return re.findall(regex_string, string)[0]
+
+
+def set_position(format_string: str, starting_string: str, generators: list) -> list:
+    """Sets the position of the password to the given value.
+    """
+    # Collecting variations between generators
+    values = get_string_variations(format_string, starting_string)
+
+    # setting each portion
+    for i in range(len(generators)):
+        if type(generators[i]) == BruteChain:
+            generators[i].setIndex(values[i])
+        else:
+            generators[i].setIndex(int(values[i]))
+
+    return generators
+
+
+def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
     and systematically prints out every combination of the desired string.\n
     @param format_string the correct string that will be the basis of the bruteforce combo\n
@@ -320,14 +373,19 @@ def iterative_printer(format_string: str, generators: list, regex: str = ""):
     @version: 1.0\n
     @date 04/21/2020\n
     """
-    if regex == "":
-        for i in product(*generators):
-            print(format_string.format(*i))
-    else:
+    if regex != "":
         reg_filter = re.compile(regex)
-        for i in product(*generators):
-            if bool(re.match(reg_filter, format_string.format(*i))):
-                print(format_string.format(*i))
+    if limit:
+        count = 0
+
+    for i in product(*generators):
+        if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
+            print(format_string.format(*i))
+            if limit:
+                if count < limit:
+                    count += 1
+                if count >= limit:
+                    return
 
 
 if __name__ == "__main__":
@@ -346,6 +404,11 @@ if __name__ == "__main__":
         help="""This arguement takes all the values returned by the program and
         only prints values that perfectly match the regular expression given.""")
 
+    parser.add_argument("-l", "--limit", type=int, metavar="limitNum", default=None,
+                        help="Add a limit to the number of passwords printed out. Will only print up to X passwords.")
+
+    parser.add_argument("-s", default=None, type=str,
+                        nargs="?", metavar="start_value", help="Set where the password generator starts rather than its initial position")
     wordlistHeader = parser.add_argument_group(
         "Wordlists", "These commands are for adding entire wordlists to the commandchain")
     wordlistGroup = wordlistHeader.add_mutually_exclusive_group()
@@ -411,4 +474,8 @@ if __name__ == "__main__":
             args.w = list()
         args.w.extend(args.wordlist.read().split("\n"))
     setup = init_formatting(args.fstring, args.w)
-    iterative_printer(*setup, args.r)
+
+    if args.s:
+        newGen = set_position(setup[0], args.s, setup[1])
+        setup = (setup[0], newGen)
+    iterative_printer(*setup, regex=args.r, limit=args.limit)
