@@ -407,6 +407,8 @@ if __name__ == "__main__":
     parser.add_argument("-l", "--limit", type=int, metavar="limitNum", default=None,
                         help="Add a limit to the number of passwords printed out. Will only print up to X passwords.")
 
+    parser.add_argument("-s", default=None, type=str,
+                        nargs="?", metavar="start_value", help="Set where the password generator starts rather than its initial position")
     wordlistHeader = parser.add_argument_group(
         "Wordlists", "These commands are for adding entire wordlists to the commandchain")
     wordlistGroup = wordlistHeader.add_mutually_exclusive_group()
@@ -472,4 +474,8 @@ if __name__ == "__main__":
             args.w = list()
         args.w.extend(args.wordlist.read().split("\n"))
     setup = init_formatting(args.fstring, args.w)
+
+    if args.s:
+        newGen = set_position(setup[0], args.s, setup[1])
+        setup = (setup[0], newGen)
     iterative_printer(*setup, regex=args.r, limit=args.limit)
