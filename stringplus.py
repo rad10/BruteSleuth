@@ -421,7 +421,8 @@ def set_position(format_string: str, starting_string: str, generators: list) -> 
 
     return generators
 
-def print_random(format_string:str, generators: list)->str:
+
+def print_random(format_string: str, generators: list) -> str:
     """Prints a random configuration of the password ruleset given.\n
     @param format_string the correct string that will be the basis of the bruteforce combo\n
     @param generators a list of iterators that are used for the format string\n
@@ -433,6 +434,7 @@ def print_random(format_string:str, generators: list)->str:
     # getting a mapping of all generators running random function
     results = tuple(map(lambda x: x.getRandom(), generators))
     return format_string.format(*results)
+
 
 def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
@@ -483,6 +485,9 @@ if __name__ == "__main__":
 
     parser.add_argument("-s", default=None, type=str,
                         nargs="?", metavar="start_value", help="Set where the password generator starts rather than its initial position")
+    parser.add_argument("--random", action="store_true",
+                        help="Creates a random password based on the rulseset given. This can be useful for randomly guessing passwords beforehand or for generating a random password itself.")
+
     wordlistHeader = parser.add_argument_group(
         "Wordlists", "These commands are for adding entire wordlists to the commandchain")
     wordlistGroup = wordlistHeader.add_mutually_exclusive_group()
@@ -549,6 +554,15 @@ if __name__ == "__main__":
         args.w.extend(args.wordlist.read().split("\n"))
     setup = init_formatting(args.fstring, args.w)
 
+    # Checking if random
+    if args.random:
+        # checking if wanting to make multiple random passwords
+        if args.limit:
+            for i in range(args.limit):
+                print(print_random(*setup))
+        else:
+            print(print_random(*setup))
+        exit()
     if args.s:
         newGen = set_position(setup[0], args.s, setup[1])
         setup = (setup[0], newGen)
