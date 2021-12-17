@@ -486,7 +486,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", default=None, type=str,
                         nargs="?", metavar="start_value", help="Set where the password generator starts rather than its initial position")
     parser.add_argument("--random", action="store_true",
-                        help="Creates a random password based on the rulseset given. This can be useful for randomly guessing passwords beforehand or for generating a random password itself.")
+                        help="Creates a random password based on the rulseset given. This can be useful for randomly guessing passwords beforehand or for generating a random password itself. Can be used with -l to generate multiple random passwords")
 
     wordlistHeader = parser.add_argument_group(
         "Wordlists", "These commands are for adding entire wordlists to the commandchain")
