@@ -11,6 +11,7 @@ from string import ascii_uppercase as uppercase
 from string import punctuation as symbols
 from string import digits as digit
 from math import prod
+from random import randrange
 
 
 class BruteChain:
@@ -86,6 +87,19 @@ class BruteChain:
         for i in range(len(value)):
             self.value[i] = self.modulus.index(value[i])
 
+    def getRandom(self) -> str:
+        """Returns a random configuration of the brutechain. This can be useful if used to
+        implement a monkey sort brute forcer, or to create a random password based on rulesets
+        """
+        # Creating random values in memory
+        randomMemory = [randrange(
+            0, len(self.modulus)) for a in self.value]
+        # building string
+        curr: str = str()
+        for i in randomMemory:
+            curr += self.modulus[i]
+        return curr
+
 
 class BaseChain:
     """ Base Chain is an iterative class that provides every permutative
@@ -131,6 +145,13 @@ class BaseChain:
 
         # set the value. Easy peasy
         self.value = value
+
+    def getRandom(self) -> int:
+        """Returns a random configuration of the basechain. This can be useful if used to
+        implement a monkey sort brute forcer, or to create a random password based on rulesets
+        """
+        # Creating random values in memory
+        return randrange(0, self.__len__())
 
 
 class DecimalChain(BaseChain):
