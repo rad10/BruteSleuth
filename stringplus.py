@@ -421,6 +421,18 @@ def set_position(format_string: str, starting_string: str, generators: list) -> 
 
     return generators
 
+def print_random(format_string:str, generators: list)->str:
+    """Prints a random configuration of the password ruleset given.\n
+    @param format_string the correct string that will be the basis of the bruteforce combo\n
+    @param generators a list of iterators that are used for the format string\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.3.1\n
+    @date 12/17/2021\n
+    """
+    # getting a mapping of all generators running random function
+    results = tuple(map(lambda x: x.getRandom(), generators))
+    return format_string.format(*results)
 
 def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
     """Iterative Printer is a function that takes the products from the last function
