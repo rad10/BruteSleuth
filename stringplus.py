@@ -375,6 +375,74 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     return (format_string, gen_list)
 
 
+def convert_to_mask(format_string: str, mode: str = "universal") -> str:
+    """Takes ruleset given in the form of an f-string and creates a mask that can be utilized
+    by hash crackers such as hashcat or john the ripper.\n
+    @param format_string the python formatting string used to created given variations\n
+    @param mode modifies the output of the mask given. The options are "universal", "hashcat".
+    and "john". Each mode will output a mask most preferrable to the specified hash cracker.
+    "universal" will instead make a mask that works for any/all hash crackers listed.\n
+    @returns a string containing custom charactersets (if any) first spearated by commas, then
+    the actual mask at the end. This output can be placed directly into a mask file or have the
+    custom character-sets separated and have the mask be directly run by the commandline.\n
+    \n
+    @author Nick Cottrell\n
+    @version: 1.3.5\n
+    @date 12/17/2021\n
+    """
+    # start by getting generators and their settings
+    gens = re.findall(r"(\{\d*[:+]?(\d+)(\w+)\})", format_string)
+
+    # charsets that already exist by default
+    default_charsets: dict = {
+        "d": "?d",
+        "a": "?l",
+        "A": "?u",
+        "s": "?s",
+        "w": "?w"
+    }
+    default_custom_charsets: dict = {
+        "b": "01",
+        "o": "012345678",
+        "x": "?dabcdefABCDEF"
+    }
+    custom_charsets: [tuple] = list()
+
+    # getting charsets utilized
+    gen_chars = set(map(lambda x: x[2], gens))
+    # filtering out default charsets to get custom ones utilized
+    gen_chars = gen_chars.difference(default_charsets.keys())
+
+    # creating charsets based on what remains
+    temp_set = str()
+    for custom_set in gen_chars:
+        # iterating through dictionaries
+        for gen_label, charset in list(default_custom_charsets.items()) + list(default_charsets.items()):
+            if gen_label in custom_set and charset not in temp_set:
+                temp_set += charset
+        # fully built charset, now adding to custom sets
+        custom_charsets.append((custom_set, temp_set))
+        # resetting tempset
+        temp_set = str()
+
+    # custom charsets built, now to replace all gens with masks
+    for tag, size, charset in map(lambda x: (x[0], int(x[1]), x[2]), gens):
+        # Checking if the charset within the tag is a default set
+        if charset in default_charsets:
+            format_string = format_string.replace(
+                tag, size * default_charsets[charset])
+        # Otherwise, check if the tag is in a custom charset and replace according to that
+        elif charset in map(lambda x: x[0], custom_charsets):
+            # doing for loop because it seems like the easiest way to get specific set
+            # without potential error
+            for custom_set in filter(lambda x: x[0] == charset, custom_charsets):
+                format_string = format_string.replace(
+                    tag, size * f"?{custom_charsets.index(custom_set) + 1}")
+
+    # new string complete, setting up custom charsets
+    return ",".join(list(map(lambda x: x[1], custom_charsets)) + [format_string])
+
+
 def get_string_variations(format_string: str, string: str) -> tuple:
     """Gets the varying values from within a password
     @param format_string the python formatting string used to created given variations
