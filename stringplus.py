@@ -527,6 +527,12 @@ if __name__ == "__main__":
         help="This is used if you want to iterate with a list of custom words")
     wordlistGroup.add_argument("--wordlist", metavar="wordlists.txt",
                                nargs="?", type=argparse.FileType("r"), default=None, const=stdin, help="Allows you to provide a file instead of adding your words to the end of the program. Separate them with newlines")
+
+    maskHeader = parser.add_argument_group(
+        "Masks",
+        "These commands change the program entirely. Instead of generating every instance of a password based on an fstring, it creates a mask used by many hash cracking programs to make them generate every possible change. This can be extremely useful, especially if haveing to consider memory/storage constraints with larger password groups.")
+    maskHeader.add_argument("--mask", action="store_true",
+                            help="Makes a mask based on the fstring given. All characters that work with the default mode will work with the mask given. The default is a universal mask that works with both John and Hashcat.")
     parser.epilog = """
         Description of Formatting
         This script works with official python formatting. For more information on proper python
@@ -578,6 +584,12 @@ if __name__ == "__main__":
         April 4th, 2020"""
 
     args = parser.parse_args()
+
+    # Checking if wanting a mask instead
+    if args.mask:
+        print(convert_to_mask(args.fstring))
+        exit()
+
     if (args.wordlist != None):
         if args.w == None:
             args.w = list()
