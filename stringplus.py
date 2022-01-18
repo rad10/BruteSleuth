@@ -653,18 +653,30 @@ if __name__ == "__main__":
         if args.w == None:
             args.w = list()
         args.w.extend(args.wordlist.read().split("\n"))
-    setup = init_formatting(args.fstring, args.w)
+    format_string, generators = init_formatting(args.fstring, args.w)
 
     # Checking if random
     if args.random:
         # checking if wanting to make multiple random passwords
         if args.limit:
             for i in range(args.limit):
-                print(print_random(*setup))
+                print(print_random(format_string, generators))
         else:
-            print(print_random(*setup))
+            print(print_random(format_string, generators))
         exit()
     if args.s:
-        newGen = set_position(setup[0], args.s, setup[1])
-        setup = (setup[0], newGen)
-    iterative_printer(*setup, regex=args.r, limit=args.limit)
+        generators = set_position(format_string, args.s, generators)
+
+    if args.r:
+        reg_filter = re.compile(args.r)
+    if args.limit:
+        count = 0
+
+    for line in BruteListChain(format_string, generators):
+        if (args.r and bool(re.match(reg_filter, line))) or args.r == "":
+            print(line)
+            if args.limit:
+                if count < args.limit:
+                    count += 1
+                if count >= args.limit:
+                    break
