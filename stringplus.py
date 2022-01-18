@@ -231,6 +231,12 @@ class BinaryChain(BaseChain):
 
 
 class iterative_product:
+    """creates an iterator of a list of all the iterators added into itself.
+    Functions the exact same way as itertools.product, but it properly creates
+    and iterator that does not consume large amounts of memory regardless of
+    its size.
+    """
+
     def __init__(self, *iterators) -> None:
         self.hold = iterators
         self.memory = [a.__next__() for a in iterators]
