@@ -277,6 +277,21 @@ class iterative_product:
         return tuple(self.memory)
 
 
+class BruteListChain(iterative_product):
+    """Creates an iterator class that will print out every combinations given
+    into it.
+    @param format_string The f-string used to be the template
+    @param generators a list of iterators that aure used to collect every
+    permutation possible.
+    """
+    def __init__(self, format_string: str, generators: list) -> None:
+        self.format_string = format_string
+        super().__init__(*generators)
+
+    def __next__(self) -> str:
+        return self.format_string.format(*super().__next__())
+
+
 def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
