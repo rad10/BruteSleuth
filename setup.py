@@ -1,6 +1,3 @@
-# https://packaging.python.org/en/latest/tutorials/packaging-projects/
-# https://python-packaging.readthedocs.io/en/latest/command-line-scripts.html
-
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
