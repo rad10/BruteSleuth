@@ -23,4 +23,6 @@ setuptools.setup(
     packages=["brutesleuth"],
     python_requires=">=3.6",
     scripts=['bin/brutesleuth'],
+    keywords=["python", "bruteforce", "wordlist", "permutation",
+              "wordlist-generator", "wordlists", "bruteforce-wordlist", "bruteforce-tools"],
 )
