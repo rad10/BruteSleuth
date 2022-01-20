@@ -11,9 +11,9 @@ setuptools.setup(
     description="Making bruteforce wordlists smarter, not harder",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/rad10/StringPlus",
+    url="https://github.com/rad10/BruteSleuth",
     project_urls={
-        "Bug Tracker": "https://github.com/rad10/StringPlus/issues",
+        "Bug Tracker": "https://github.com/rad10/BruteSleuth/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
