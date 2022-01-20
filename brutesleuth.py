@@ -5,7 +5,7 @@
 
 import argparse
 from sys import stdin
-from src.stringplus import *
+from src.brutesleuth import *
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
