@@ -1,21 +1,25 @@
 """# BruteSleuth
-This program uses string formatting to give a list of strings related to an original string based off regex
+This program uses string formatting to give a list of strings related to an
+original string based off regex
 
 ## Description of Formatting
-This script works with official python formatting. For more information on proper python
-formatting, see the official documentation[1].
+This script works with official python formatting. For more information on
+proper python formatting, see the official documentation[1].
 
-This program also works with custom formatting of its own design. This was implemented so
-that iteration using multiple unique character sets was possible.
+This program also works with custom formatting of its own design. This was
+implemented so that iteration using multiple unique character sets was
+possible.
 
 ## Pythonic Formatting
-As stated, this program works with the majority of formatting that can be done in python.
-What this means is that you can input almost any string into the programs formatter that
-will work in a python f-string or string.format function. As such, \"`{0:4d}`\" will use the
-first generator to iterate through 4 base 10 digits in the chain. Currently only digit
-based filters work (though they are for the most part the only bits that will make sense)
-but this means that \"`{2x}`\" for 2 hex characters will work, as well as \"`{0:08b}`\" and \"`{0:3o}`\"
-and other formats that can be iterated may be added in the near future.
+As stated, this program works with the majority of formatting that can be done
+in python. What this means is that you can input almost any string into the
+programs formatter that will work in a python f-string or string.format
+function. As such, \"`{0:4d}`\" will use the first generator to iterate
+through 4 base 10 digits in the chain. Currently only digit based filters work
+(though they are for the most part the only bits that will make sense) but
+this means that \"`{2x}`\" for 2 hex characters will work, as well as
+\"`{0:08b}`\" and \"`{0:3o}`\" and other formats that can be iterated may be
+added in the near future.
 """
 __version__ = "1.4.0"
 __author__ = "Nick Cottrell"
@@ -31,15 +35,16 @@ import re
 
 class BruteChain:
     """ Bruteforce Chain is an iterative class that provides every permutative
-    combo of a given list and length.\n
-    @param length the number of bits to the iterator\n
-    @param data a list of lists. This is setup so that the iterator can internally
-    combine the lists into a bigger, more refined set of characters to permutate\n
-    @return an iterator that goes through every possible combination of values given
-    in the dataset of given length\n
-    \n
-    @author Nick Cottrell\n
-    @version: 2.1\n
+    combo of a given list and length.
+    @param length the number of bits to the iterator
+    @param data a list of lists. This is setup so that the iterator can
+    internally combine the lists into a bigger, more refined set of characters
+    to permutate
+    @return an iterator that goes through every possible combination of values
+    given in the dataset of given length
+
+    @author Nick Cottrell
+    @version: 2.1
     @date 04/21/2020
     """
     modulus: list = None
@@ -78,8 +83,9 @@ class BruteChain:
             if (self.value[i] >= len(self.modulus)):
                 self.value[i - 1] += 1
                 self.value[i] = 0
-            else:  # The idea here is that if the current bit doesnt need to be reset
-                break  # Then theres no need to continue as nothing else has changed
+            # The idea here is that if the current bit doesnt need to be reset
+            else:  # then theres no need to continue as nothing else has
+                break  # changed
         # Finished
         return curr
 
@@ -87,8 +93,9 @@ class BruteChain:
         return len(self.modulus) ** self.length
 
     def setIndex(self, value: str) -> None:
-        """Set the value that the iterator is currently at. Will raise exceptions if
-        input isnt long enough or contains characters not within the dictionary
+        """Set the value that the iterator is currently at. Will raise
+        exceptions if input isnt long enough or contains characters not within
+        the dictionary
         """
         # Check that values are correct length
         if len(value) != len(self.value):
@@ -103,8 +110,9 @@ class BruteChain:
             self.value[i] = self.modulus.index(value[i])
 
     def getRandom(self) -> str:
-        """Returns a random configuration of the brutechain. This can be useful if used to
-        implement a monkey sort brute forcer, or to create a random password based on rulesets
+        """Returns a random configuration of the brutechain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
         """
         # Creating random values in memory
         randomMemory = [randrange(
@@ -117,17 +125,19 @@ class BruteChain:
 
 
 class BaseChain:
-    """ Base Chain is an iterative class that provides every permutative
-    combo of a number system up to a given length.\n
-    @param base the number thats 1 larger than the largest bit value possible. Allows
-    Cheap and easy permutations for octal, binary, decimal, and many others (not hex sadly)\n
-    @param length the number of bits to the iterator\n
-    @return an iterator that goes through every possible combination of values given
-    from the base and the length. the iterator has base^length values in total\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 04/21/2020\n
+    """ Base Chain is an iterative class that provides every permutative combo
+    of a number system up to a given length.
+    @param base the number thats 1 larger than the largest bit value possible.
+    Allows cheap and easy permutations for octal, binary, decimal, and many
+    others (not hex sadly)
+    @param length the number of bits to the iterator
+    @return an iterator that goes through every possible combination of values
+    given from the base and the length. the iterator has base^length values in
+    total
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 04/21/2020
     """
     base: int = int()
     length: int = int()
@@ -151,8 +161,8 @@ class BaseChain:
         return self.base ** self.length
 
     def setIndex(self, value: int) -> None:
-        """Set the value that the iterator is currently at. Will raise exceptions if
-        input is larger than the iterators length
+        """Set the value that the iterator is currently at. Will raise
+        exceptions if input is larger than the iterators length
         """
         # Checking if value is past length
         if value >= self.__len__():
@@ -162,8 +172,9 @@ class BaseChain:
         self.value = value
 
     def getRandom(self) -> int:
-        """Returns a random configuration of the basechain. This can be useful if used to
-        implement a monkey sort brute forcer, or to create a random password based on rulesets
+        """Returns a random configuration of the basechain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
         """
         # Creating random values in memory
         return randrange(0, self.__len__())
@@ -171,14 +182,15 @@ class BaseChain:
 
 class DecimalChain(BaseChain):
     """ Decimal Chain is an iterative class that provides every permutative
-    combo of decimal numbers up to a given length.\n
-    @param length the number of bits to the iterator\n
-    @return an iterator that goes through every possible combination of values given
-    from the base and the length. the iterator has 10^length values in total\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 09/09/2021\n
+    combo of decimal numbers up to a given length.
+    @param length the number of bits to the iterator
+    @return an iterator that goes through every possible combination of values
+    given from the base and the length. the iterator has 10^length values in
+    total
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 09/09/2021
     """
 
     def __init__(self, length: int):
@@ -190,14 +202,15 @@ class DecimalChain(BaseChain):
 
 class HexadecimalChain(BaseChain):
     """ Hexadecimal Chain is an iterative class that provides every permutative
-    combo of hexadecimal numbers up to a given length.\n
-    @param length the number of bits to the iterator\n
-    @return an iterator that goes through every possible combination of values given
-    from the base and the length. the iterator has 16^length values in total\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 09/09/2021\n
+    combo of hexadecimal numbers up to a given length.
+    @param length the number of bits to the iterator
+    @return an iterator that goes through every possible combination of values
+    given from the base and the length. the iterator has 16^length values in
+    total
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 09/09/2021
     """
 
     def __init__(self, length: int):
@@ -209,14 +222,15 @@ class HexadecimalChain(BaseChain):
 
 class OctalChain(BaseChain):
     """ Octal Chain is an iterative class that provides every permutative
-    combo of octal numbers up to a given length.\n
-    @param length the number of bits to the iterator\n
-    @return an iterator that goes through every possible combination of values given
-    from the base and the length. the iterator has 8^length values in total\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 09/09/2021\n
+    combo of octal numbers up to a given length.
+    @param length the number of bits to the iterator
+    @return an iterator that goes through every possible combination of values
+    given from the base and the length. the iterator has 8^length values in
+    total
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 09/09/2021
     """
 
     def __init__(self, length: int):
@@ -228,14 +242,15 @@ class OctalChain(BaseChain):
 
 class BinaryChain(BaseChain):
     """ Binary Chain is an iterative class that provides every permutative
-    combo of 1 and 0 up to a given length.\n
-    @param length the number of bits to the iterator\n
-    @return an iterator that goes through every possible combination of values given
-    from the base and the length. the iterator has 2^length values in total\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 09/09/2021\n
+    combo of 1 and 0 up to a given length.
+    @param length the number of bits to the iterator
+    @return an iterator that goes through every possible combination of values
+    given from the base and the length. the iterator has 2^length values in]
+    total
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 09/09/2021
     """
 
     def __init__(self, length: int):
@@ -280,12 +295,14 @@ class iterative_product:
                 self.memory[index] = self.hold[index].__next__()
                 nudgeStep = False
             except StopIteration:
-                # if reached the end, reset current step to first bit then nudge
+                # if reached the end, reset current step to first bit then
+                # nudge
                 self.memory[index] = self.hold[index].__next__()
                 index -= 1
                 nudgeStep = True
 
-        # if the index is -1, the last nudge as gone full circle, ending all possible permutations
+        # if the index is -1, the last nudge as gone full circle, ending all
+        # possible permutations
         if index == -1:
             raise StopIteration
 
@@ -311,17 +328,17 @@ class BruteListChain(iterative_product):
 def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
     """Init Formatting is the function that takes apart the given string and
     converts it into a legal string while also understanding what permutations
-    it will need to print every possible string desired.\n
-    @param format_string the formatted string that gets dissected and corrected\n
-    @param Wordlist a list of custom words inserted from commandline or as additional
-    args\n
-    @return the function returns a tuple with the first object being the corrected
-    string, and the second object being a list containing all iteration generators
-    in order of which ones will be needed.\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 04/21/2020\n
+    it will need to print every possible string desired.
+    @param format_string the formatted string that gets dissected and corrected
+    @param Wordlist a list of custom words inserted from commandline or as
+    additional args
+    @return the function returns a tuple with the first object being the
+    corrected string, and the second object being a list containing all
+    iteration generators in order of which ones will be needed.
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 04/21/2020
     """
 
     # Checking if formatting uses id
@@ -340,7 +357,8 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
 
     # This regex grabs every format tag in order of appearance
     formatList = re.findall(
-        r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))', format_string)
+        r'((?:{(?:\d+\+)?[\w\d\s]*\d+\w+})|(?:{\d*:[\s\d\w\.\-\_]*\d+\w}))',
+        format_string)
 
     # determining use of id
     temp: list = custom.copy()
@@ -370,7 +388,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(digit)
                 elif (symbol == "s"):
                     dict_box.append(symbols)
-                elif (symbol == "w" and Wordlist != None):
+                elif (symbol == "w" and Wordlist):
                     dict_box.append(Wordlist)
             gen_list[int(i[1])] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
@@ -406,7 +424,7 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
                     dict_box.append(digit)
                 elif (symbol == "s"):
                     dict_box.append(symbols)
-                elif (symbol == "w" and Wordlist != None):
+                elif (symbol == "w" and Wordlist):
                     dict_box.append(Wordlist)
             gen_list[index] = BruteChain(int(i[3]), *dict_box.copy())
             dict_box.clear()
@@ -434,19 +452,22 @@ def init_formatting(format_string: str, Wordlist: [str] = None) -> (str, list):
 
 
 def convert_to_mask(format_string: str, mode: str = "universal") -> str:
-    """Takes ruleset given in the form of an f-string and creates a mask that can be utilized
-    by hash crackers such as hashcat or john the ripper.\n
-    @param format_string the python formatting string used to created given variations\n
-    @param mode modifies the output of the mask given. The options are "universal", "hashcat".
-    and "john". Each mode will output a mask most preferrable to the specified hash cracker.
-    "universal" will instead make a mask that works for any/all hash crackers listed.\n
-    @returns a string containing custom charactersets (if any) first spearated by commas, then
-    the actual mask at the end. This output can be placed directly into a mask file or have the
-    custom character-sets separated and have the mask be directly run by the commandline.\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.3.5\n
-    @date 12/17/2021\n
+    """Takes ruleset given in the form of an f-string and creates a mask that
+    can be utilized by hash crackers such as hashcat or john the ripper.
+    @param format_string the python formatting string used to created given
+    variations
+    @param mode modifies the output of the mask given. The options are
+    "universal", "hashcat". and "john". Each mode will output a mask most
+    preferrable to the specified hash cracker. "universal" will instead make a
+    mask that works for any/all hash crackers listed.
+    @returns a string containing custom charactersets (if any) first spearated
+    by commas, then the actual mask at the end. This output can be placed
+    directly into a mask file or have the custom character-sets separated and
+    have the mask be directly run by the commandline.
+
+    @author Nick Cottrell
+    @version: 1.3.5
+    @date 12/17/2021
     """
     # start by getting generators and their settings
     gens = re.findall(r"(\{\d*[:+]?(\d+)(\w+)\})", format_string)
@@ -475,7 +496,9 @@ def convert_to_mask(format_string: str, mode: str = "universal") -> str:
     temp_set = str()
     for custom_set in gen_chars:
         # iterating through dictionaries
-        for gen_label, charset in list(default_custom_charsets.items()) + list(default_charsets.items()):
+        for gen_label, charset in list(
+                default_custom_charsets.items()) + list(
+                default_charsets.items()):
             if gen_label in custom_set and charset not in temp_set:
                 temp_set += charset
         # fully built charset, now adding to custom sets
@@ -489,21 +512,25 @@ def convert_to_mask(format_string: str, mode: str = "universal") -> str:
         if charset in default_charsets:
             format_string = format_string.replace(
                 tag, size * default_charsets[charset])
-        # Otherwise, check if the tag is in a custom charset and replace according to that
+        # Otherwise, check if the tag is in a custom charset and replace
+        # according to that
         elif charset in map(lambda x: x[0], custom_charsets):
-            # doing for loop because it seems like the easiest way to get specific set
-            # without potential error
-            for custom_set in filter(lambda x: x[0] == charset, custom_charsets):
+            # doing for loop because it seems like the easiest way to get
+            # specific set without potential error
+            for custom_set in filter(lambda x: x[0] == charset,
+                                     custom_charsets):
                 format_string = format_string.replace(
                     tag, size * f"?{custom_charsets.index(custom_set) + 1}")
 
     # new string complete, setting up custom charsets
-    return ",".join(list(map(lambda x: x[1], custom_charsets)) + [format_string])
+    return ",".join(
+        list(map(lambda x: x[1], custom_charsets)) + [format_string])
 
 
 def get_string_variations(format_string: str, string: str) -> tuple:
     """Gets the varying values from within a password
-    @param format_string the python formatting string used to created given variations
+    @param format_string the python formatting string used to created given
+    variations
     @param string the string to collect varying values.
     """
     # start by making a regex string based on python formatting
@@ -511,7 +538,8 @@ def get_string_variations(format_string: str, string: str) -> tuple:
     return re.findall(regex_string, string)[0]
 
 
-def set_position(format_string: str, starting_string: str, generators: list) -> list:
+def set_position(format_string: str, starting_string: str,
+                 generators: list) -> list:
     """Sets the position of the password to the given value.
     """
     # Collecting variations between generators
@@ -528,31 +556,35 @@ def set_position(format_string: str, starting_string: str, generators: list) -> 
 
 
 def print_random(format_string: str, generators: list) -> str:
-    """Prints a random configuration of the password ruleset given.\n
-    @param format_string the correct string that will be the basis of the bruteforce combo\n
-    @param generators a list of iterators that are used for the format string\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.3.1\n
-    @date 12/17/2021\n
+    """Prints a random configuration of the password ruleset given.
+    @param format_string the correct string that will be the basis of the
+    bruteforce combo
+    @param generators a list of iterators that are used for the format string
+
+    @author Nick Cottrell
+    @version: 1.3.1
+    @date 12/17/2021
     """
     # getting a mapping of all generators running random function
     results = tuple(map(lambda x: x.getRandom(), generators))
     return format_string.format(*results)
 
 
-def iterative_printer(format_string: str, generators: list, regex: str = "", limit: int = None):
-    """Iterative Printer is a function that takes the products from the last function
-    and systematically prints out every combination of the desired string.\n
-    @param format_string the correct string that will be the basis of the bruteforce combo\n
-    @param generators a list of iterators that are used for the format string\n
-    @param regex a regex string that can be used to filter through the string combos
-    so that the user can only grab their desired strings is the formatted string isnt
-    specific enough.\n
-    \n
-    @author Nick Cottrell\n
-    @version: 1.0\n
-    @date 04/21/2020\n
+def iterative_printer(format_string: str, generators: list, regex: str = "",
+                      limit: int = None):
+    """Iterative Printer is a function that takes the products from the last
+    function and systematically prints out every combination of the desired
+    string.
+    @param format_string the correct string that will be the basis of the
+    bruteforce combo
+    @param generators a list of iterators that are used for the format string
+    @param regex a regex string that can be used to filter through the string
+    combos so that the user can only grab their desired strings is the
+    formatted string isnt specific enough.
+
+    @author Nick Cottrell
+    @version: 1.0
+    @date 04/21/2020
     """
     if regex != "":
         reg_filter = re.compile(regex)
@@ -560,7 +592,9 @@ def iterative_printer(format_string: str, generators: list, regex: str = "", lim
         count = 0
 
     for i in iterative_product(*generators):
-        if (regex != "" and bool(re.match(reg_filter, format_string.format(*i)))) or regex == "":
+        if (regex != "" and bool(
+                re.match(reg_filter,
+                         format_string.format(*i)))) or regex == "":
             print(format_string.format(*i))
             if limit:
                 if count < limit:
