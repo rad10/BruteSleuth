@@ -1,10 +1,10 @@
-import re
-from string import ascii_lowercase as lowercase
-from string import ascii_uppercase as uppercase
-from string import punctuation as symbols
-from string import digits as digit
-from math import prod
 from random import randrange
+from math import prod
+from string import digits as digit
+from string import punctuation as symbols
+from string import ascii_uppercase as uppercase
+from string import ascii_lowercase as lowercase
+import re
 
 
 class BruteChain:
