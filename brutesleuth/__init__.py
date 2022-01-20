@@ -1,3 +1,25 @@
+"""# BruteSleuth
+This program uses string formatting to give a list of strings related to an original string based off regex
+
+## Description of Formatting
+This script works with official python formatting. For more information on proper python
+formatting, see the official documentation[1].
+
+This program also works with custom formatting of its own design. This was implemented so
+that iteration using multiple unique character sets was possible.
+
+## Pythonic Formatting
+As stated, this program works with the majority of formatting that can be done in python.
+What this means is that you can input almost any string into the programs formatter that
+will work in a python f-string or string.format function. As such, \"`{0:4d}`\" will use the
+first generator to iterate through 4 base 10 digits in the chain. Currently only digit
+based filters work (though they are for the most part the only bits that will make sense)
+but this means that \"`{2x}`\" for 2 hex characters will work, as well as \"`{0:08b}`\" and \"`{0:3o}`\"
+and other formats that can be iterated may be added in the near future.
+"""
+__version__ = "1.4.0"
+__author__ = "Nick Cottrell"
+
 from random import randrange
 from math import prod
 from string import digits as digit
