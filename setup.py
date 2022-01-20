@@ -12,6 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/rad10/BruteSleuth",
+    download_url="https://github.com/rad10/BruteSleuth/releases",
     project_urls={
         "Bug Tracker": "https://github.com/rad10/BruteSleuth/issues",
     },
