@@ -8,7 +8,7 @@ setuptools.setup(
     version="1.3.5",
     author="Nicholas Cottrell",
     author_email="ncottrellweb@gmail.com",
-    description="This program uses string formatting to give a list of strings related to an original string based off regex",
+    description="Making bruteforce wordlists smarter, not harder",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/rad10/StringPlus",
