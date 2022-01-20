@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="stringplus",
+    name="BruteSleuth",
     version="1.3.5",
     author="Nicholas Cottrell",
     author_email="ncottrellweb@gmail.com",
@@ -26,5 +26,5 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-    scripts=['bin/stringplus'],
+    scripts=['bin/brutesleuth'],
 )
