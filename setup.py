@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="BruteSleuth",
-    version="1.3.5",
+    version="1.4.0",
     author="Nicholas Cottrell",
     author_email="ncottrellweb@gmail.com",
     description="Making bruteforce wordlists smarter, not harder",
