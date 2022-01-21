@@ -25,7 +25,6 @@ __version__ = "1.4.0"
 __author__ = "Nick Cottrell"
 
 from random import randrange
-from math import prod
 from string import digits as digit
 from string import punctuation as symbols
 from string import ascii_uppercase as uppercase
@@ -273,7 +272,10 @@ class iterative_product:
         self.firstRun = True
 
     def __len__(self) -> int:
-        return prod(map(len, self.hold))
+        total: int = 1  # TODO: Use math.prod once 3.6 is eol.
+        for length in map(len, self.hold):
+            total *= length
+        return total
 
     def __iter__(self):
         if len(self.hold) == 0:
