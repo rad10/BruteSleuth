@@ -264,6 +264,10 @@ class iterative_product:
     Functions the exact same way as itertools.product, but it properly creates
     and iterator that does not consume large amounts of memory regardless of
     its size.
+
+    @author Nick Cottrell
+    @version 1.0
+    @date 01/20/2022
     """
 
     def __init__(self, *iterators) -> None:
