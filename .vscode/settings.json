@@ -40,7 +40,7 @@
     "python.languageServer": "Pylance",
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
-    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": true,
     "python.linting.pylintUseMinimalCheckers": true,
     "python.terminal.activateEnvironment": true,
     "python.terminal.executeInFileDir": true,
