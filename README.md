@@ -4,6 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/BruteSleuth?style=flat)](https://pypi.org/project/BruteSleuth/)
 [![GPL3 License](https://img.shields.io/github/license/rad10/BruteSleuth?style=flat)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Package build status](https://img.shields.io/github/workflow/status/rad10/BruteSleuth/Python%20package?logo=GitHub)](https://github.com/rad10/BruteSleuth/actions/workflows/python-package.yml)
+
 This program uses string formatting to give a list of strings related to an original string based off regex
 
 ## Description of Formatting
@@ -52,6 +53,10 @@ another portion of the password, then you can call the iterative number twice, m
 positives and less passwords to generate, which means it runs faster. The other advantage is you can
 prioritize portions of the unknown password. formats with smaller ID's will change value far less often
 than a format with a higher value. This can make life easier as the password list continues to grow in size.
+
+## Contributing
+
+see [CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## Links:
 [1] https://docs.python.org/3.4/library/string.html#format-string-syntax
