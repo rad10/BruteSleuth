@@ -58,9 +58,9 @@ than a format with a higher value. This can make life easier as the password lis
 
 see [CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
-## Links:
+## Links
 [1] https://docs.python.org/3.4/library/string.html#format-string-syntax
 
-## Authoring:
+## Authoring
 This program was built by Nicholas Cottrell (Rad10Logic)
 April 4th, 2020
