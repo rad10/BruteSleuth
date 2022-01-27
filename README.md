@@ -7,6 +7,15 @@
 
 This program uses string formatting to give a list of strings related to an original string based off regex
 
+## How to install BruteSleuth
+
+
+## What is BruteSleuth
+
+
+## Why use BruteSleuth
+
+
 ## Description of Formatting
 This script works with official python formatting. For more information on proper python
 formatting, see the official documentation[1].
