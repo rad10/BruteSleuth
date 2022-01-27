@@ -1,4 +1,9 @@
 # BruteSleuth
+
+[![GitHub Version](https://img.shields.io/github/v/release/rad10/BruteSleuth)](https://github.com/rad10/BruteSleuth/releases)
+[![PyPI](https://img.shields.io/pypi/v/BruteSleuth?style=flat)](https://pypi.org/project/BruteSleuth/)
+[![GPL3 License](https://img.shields.io/github/license/rad10/BruteSleuth?style=flat)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Package build status](https://img.shields.io/github/workflow/status/rad10/BruteSleuth/Python%20package?logo=GitHub)](https://github.com/rad10/BruteSleuth/actions/workflows/python-package.yml)
 This program uses string formatting to give a list of strings related to an original string based off regex
 
 ## Description of Formatting
