@@ -127,6 +127,66 @@ you know, making it a smart Bruteforcer.
 
 ## Why use BruteSleuth
 
+Story time:
+I first created this tool to be used in the National Cyber League
+([NCL](https://nationalcyberleague.org/)) to be used in one of their Capture
+The Flags (CTFs). I specifically made this tool for the hash cracking
+section. One of the sections is always to find the flag that the hash
+represents. The flag would always be SKY, 4 letters, then 4 digits as such:
+`SKY-KVjW-1830`, but then there was another section where all the hashes
+were a developers name, an animal, then 2 digits. I could make a wordlist by
+making a python script that generates each combination. The SKY flags would
+require at least 2 nested for loops to get every combo, and the developer
+hashes would require at least 3 nested for loops. Plus the script wasnt easily
+modifiable to go from one to the other. After doing to many hash cracking
+challenges where I have to make a new python script to make my wordlist, I
+started to get fed up with it and decided that I would make a python script to
+[rule them all](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/08/Lord-of-the-Rings-Eye-of-Sauron-Mordor-1.jpg).
+Since then, I have been using this script to make all of my custom wordlists.
+[/story]
+
+Why would you want to use BruteSleuth? Because making a custom python script
+every time that you have a unique wordlist is obnoxious. Why do that when you
+could use this tool to do all the forloops for you in the background. If you
+understand how f-strings work, then you can make any custom wordlist that your
+heart desires. You can even use full words in your combinations if you wanted.
+
+For those of you who are looking at this and asking: How is this better than
+hash masks? For those who do not know, some BruteForce tools, such as
+[John the Ripper](https://www.openwall.com/john/doc/RULES.shtml) and
+[Hashcat](https://hashcat.net/wiki/doku.php?id=mask_attack) both provide a
+ruleset to make smart patterns for BruteForcing. The way that this tool is
+better than these options is that it isn't. Even if the pattern ruleset is far
+superior to hashcat or johns, nothing will beat the unison. When hashcat uses
+a mask, the mask gets directly turned into a hash and compared. With this tool,
+you would have to first output the wordlist to a file (which could go into the
+GB in size), then use that file as input for hashcat. For memory and storage
+sake, hashcat/john is 100% the way to go, but there is still a good reason to
+use this tool for bruteforcing. There are far more bruteforcing tools besides
+hashcat and john, and most do not support a masking feature. Bruteforcing tools
+such as Medusa, Ncrack, aircrack-ng, and hydra (kinda) do not have a way to
+make a passwordlist based off a pattern or a hash mask. Since there will always
+be tools like these that will only accept a file with password lines on each
+line, it is a solid option to be able to convert your mask consistently to a
+wordlist that can be used by **any** tool that is designed for some form of
+bruteforcing. In addition to this, BruteSleuth can even take a pattern string
+and convert it into a hash mask for you in case you dont know how to program
+one yourself (though it is 100% worth it to learn).
+
+Another reason to use this tool for those masochistic enough to still want a
+python script for their wordlist generation is that all the major functions
+used in making any permutation wordlist can be used in your own scripts. I
+heavily document every function that I write (seriously, roughly 2/3 of every
+file is comments or doc strings). These include everything from the custom
+classes used to permutate combinations, to a proper iter_product function that
+properly products every iter without using all the memory (itertools, eat your
+heart out), to the functions that convert a pattern string into an iter class
+with every password available. All that and more by simply adding this to your
+project:
+
+```python
+import BruteSleuth
+```
 
 ## Description of Formatting
 This script works with official python formatting. For more information on proper python
