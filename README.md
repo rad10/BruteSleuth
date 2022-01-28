@@ -84,6 +84,7 @@ or
 
 ```bash
 sudo yum localinstall BruteSleuth-1.4.0-1.noarch.rpm
+```
 
 ### Arch
 
