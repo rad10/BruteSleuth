@@ -21,7 +21,7 @@ this means that \"`{2x}`\" for 2 hex characters will work, as well as
 \"`{0:08b}`\" and \"`{0:3o}`\" and other formats that can be iterated may be
 added in the near future.
 """
-__version__ = "1.4.0"
+__version__ = "1.4.2"
 __author__ = "Nick Cottrell"
 
 from random import randrange
