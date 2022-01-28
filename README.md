@@ -10,6 +10,11 @@ This program uses string formatting to give a list of strings related to an orig
 ## Table of Contents
 
  * [How to install BruteSleuth](#how-to-install-brutesleuth)
+    * [Pip](#pip)
+    * [Debian](#debian)
+    * [RHEL](#rhel)
+    * [Arch](#arch)
+    * [Source](#source)
  * [What is BruteSleuth](#what-is-brutesleuth)
  * [Why use BruteSleuth](#why-use-brutesleuth)
  * [Contributing](#contributing)
@@ -19,6 +24,94 @@ This program uses string formatting to give a list of strings related to an orig
 
 ## How to install BruteSleuth
 
+With the way that the project is set up, there are multiple ways to install
+BruteSleuth. The main way to install it is through pip, but it can be installed
+on Debian, Arch, and RHEL.
+
+### Pip
+
+to install the project from anywhere, the command is simply:
+
+```bash
+python -m pip install BruteSleuth
+```
+
+or
+
+```bash
+pip install BruteSleuth
+```
+
+If you are deciding to use the manual wheel from the releases page, you can
+always install it directly with pip as well
+
+```bash
+pip install ./BruteSleuth-1.4.0-py3-none-any.whl
+```
+
+### Debian
+
+In the releases, there should be a `.deb` file for debian users. It is not
+bound to any particular distro. The only special difference with it is that it
+requires the OS to recognize a version of Python 3, which most Distro's already
+have installed. You can install the deb file with either of these two commands.
+
+```bash
+sudo apt install ./python3-brutesleuth_1.4.0-1_all.deb
+```
+
+or with
+
+```bash
+sudo dpkg -i python3-brutesleuth_1.4.0-1_all.deb
+```
+
+### RHEL
+
+For you fedora/RHEL users, I also provided an RPM file that can be used with
+dnf. You can install it with:
+
+```bash
+sudo rpm -i BruteSleuth-1.4.0-1.noarch.rpm
+```
+or
+
+```bash
+sudo dnf localinstall BruteSleuth-1.4.0-1.noarch.rpm
+```
+
+or
+
+```bash
+sudo yum localinstall BruteSleuth-1.4.0-1.noarch.rpm
+
+### Arch
+
+I include a `PKGBUILD` file in the root of the repo that can be used to install
+the package (written by me, so you know that the source is trustworthy.) To
+install the package, either clone the repo or just download the `PKGBUILD` file
+then run the usual commands that you would to install the package.
+
+```bash
+makepkg -si
+```
+
+Or if you don't want to build it yourself (which I get), I also include a
+`.pkg.tar.zst` file that you can use directly with pacman.
+
+```bash
+pacman -U python-brutesleuth-git-1.4.0.r0.?-1-any.pkg.tar.zst
+```
+
+### Source
+
+For those of you wanting to be a little bit adventurous out there or want to
+directly install a modified version of this library, you can easily directly
+install the package by going into the cloned folder and running:
+
+```bash
+python setup.py install
+```
 
 ## What is BruteSleuth
 
