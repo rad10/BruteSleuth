@@ -116,6 +116,14 @@ python setup.py install
 
 ## What is BruteSleuth
 
+BruteSleuth is a smart Bruteforce engine. What this means is that it can take
+a pattern string and output **every** combination that fits within that
+pattern into a wordlist. There are tools that can make every permutation of a
+character for a given length to be used in a wordlist, but what makes
+BruteSleuth smarter is that you as the user can decide what positions a
+character can be and what spots are constants. This means that the number of
+words that will be used for your wordlist go down the more information that
+you know, making it a smart Bruteforcer.
 
 ## Why use BruteSleuth
 
