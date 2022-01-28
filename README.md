@@ -7,6 +7,16 @@
 
 This program uses string formatting to give a list of strings related to an original string based off regex
 
+## Table of Contents
+
+ * [How to install BruteSleuth](#how-to-install-brutesleuth)
+ * [What is BruteSleuth](#what-is-brutesleuth)
+ * [Why use BruteSleuth](#why-use-brutesleuth)
+ * [Contributing](#contributing)
+ * [Links](#links)
+ * [Authoring](#authoring)
+
+
 ## How to install BruteSleuth
 
 
