@@ -185,7 +185,7 @@ with every password available. All that and more by simply adding this to your
 project:
 
 ```python
-import BruteSleuth
+import brutesleuth
 ```
 
 ## Contributing
