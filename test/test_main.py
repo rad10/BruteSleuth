@@ -24,3 +24,16 @@ class TestBaseChain:
         chain.setIndex(0)
         for result, expected in zip(chain, range(base ** length)):
             assert result == expected
+
+# Testing handler functions
+
+
+@pytest.mark.parametrize("format_string,format_frame", [
+    ("SKY-{4aA}-{4d}", "SKY-{:4s}-{:4s}"),
+    ("SKY-{4aA}-{:4d}", "SKY-{:4s}-{:4d}"),
+    ("Password{2d}", "Password{:2s}"),
+    ("Binary{:04b}", "Binary{:04b}"),
+])
+def test_init_formatting(format_string, format_frame):
+    result, _ = brutesleuth.init_formatting(format_string)
+    assert result == format_frame
