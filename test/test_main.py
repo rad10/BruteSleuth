@@ -56,6 +56,10 @@ def test_convert_to_mask(format_string, format_mask):
     ("Binary{:04b}", "Binary0100", "0100")
 ])
 def test_get_string_variations(format_string, real_string, expected_results):
-    results = brutesleuth.get_string_variations(format_string, real_string)
+    results = brutesleuth.get_string_variations(
+        format_string, real_string)
+    if type(results) is str:
+        packing = results
+    else:
     packing = "_".join(results)
     assert packing == expected_results
