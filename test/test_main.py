@@ -61,5 +61,29 @@ def test_get_string_variations(format_string, real_string, expected_results):
     if type(results) is str:
         packing = results
     else:
-    packing = "_".join(results)
+        packing = "_".join(results)
     assert packing == expected_results
+
+
+@pytest.mark.parametrize("format_string,set_string", [
+    ("SKY-{4aA}-{4d}", "SKY-Aefa-0146"),
+    # ("Password{:2d}", "Password83"),
+    # ("Binary{:04b}", "Binary0100")
+])
+def test_set_position(format_string, set_string):
+    format_frame, gens = brutesleuth.init_formatting(format_string)
+    new_gens = brutesleuth.set_position(format_frame, set_string, gens)
+    chain = brutesleuth.BruteListChain(format_frame, new_gens)
+    assert chain.__next__() == set_string
+
+
+@pytest.mark.parametrize("format_string", [
+    "SKY-{4aA}-{4d}", "SKY-{4aA}-{:04d}",
+    "Password{:2d}", "Binary{:04b}"
+])
+def test_print_random(format_string):
+    format_frame, gens = brutesleuth.init_formatting(format_string)
+    rand_result = brutesleuth.print_random(format_frame, gens)
+
+    # checking if it can be extrapolated
+    brutesleuth.get_string_variations(format_frame, rand_result)
