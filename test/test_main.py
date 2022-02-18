@@ -1,5 +1,21 @@
 import pytest
 import brutesleuth
+
+
+@pytest.mark.skip(reason="WIP need to complete")
+class TestBruteChain:
+    def test_length(self, length, iters):
+        chain = brutesleuth.BruteChain(length, *iters)
+        assert len(chain) == sum(iters, key=len)
+
+    def test_set_index(self, length, iters, value):
+        chain = brutesleuth.BruteChain(length, *iters)
+        chain.setIndex(value)
+        assert chain.__next__() == value
+
+    @pytest.mark.skip(reason="WIP need to complete")
+    def test_incremental_result(self, length, iters):
+        pass
 # Testing functions of Base chain chains
 
 
@@ -24,6 +40,124 @@ class TestBaseChain:
         chain.setIndex(0)
         for result, expected in zip(chain, range(base ** length)):
             assert result == expected
+
+
+@pytest.mark.parametrize("length", [
+    2, 3, 5, 8, 10
+])
+class TestDecimalChain:
+    def test_length(self, length):
+        chain = brutesleuth.DecimalChain(length)
+        assert len(chain) == 10 ** length
+
+    @pytest.mark.parametrize("index", [0, 2, 5, 12, 18])
+    def test_set_index(self, length, index):
+        chain = brutesleuth.DecimalChain(length)
+        chain.setIndex(index)
+        assert chain.__next__() == f"{index:0{length:d}d}"
+
+    def test_incremental_result(self, length):
+        chain = brutesleuth.DecimalChain(length)
+        chain.setIndex(0)
+        for result, expected in zip(chain, map(
+                lambda i: f"{i:0{length:d}d}", range(2 ** length))):
+            assert result == expected
+
+
+@pytest.mark.parametrize("length", [
+    2, 3, 5, 8, 10
+])
+class TestHexadecimalChain:
+    def test_length(self, length):
+        chain = brutesleuth.HexadecimalChain(length)
+        assert len(chain) == 16 ** length
+
+    @pytest.mark.parametrize("index", [0, 2, 5, 12, 18])
+    def test_set_index(self, length, index):
+        chain = brutesleuth.HexadecimalChain(length)
+        chain.setIndex(index)
+        assert chain.__next__() == f"{index:0{length:d}x}"
+
+    def test_incremental_result(self, length):
+        chain = brutesleuth.HexadecimalChain(length)
+        chain.setIndex(0)
+        for result, expected in zip(chain, map(
+                lambda i: f"{i:0{length:d}x}", range(2 ** length))):
+            assert result == expected
+
+
+@pytest.mark.parametrize("length", [
+    2, 3, 5, 8, 20
+])
+class TestOctalChain:
+    def test_length(self, length):
+        chain = brutesleuth.OctalChain(length)
+        assert len(chain) == 8 ** length
+
+    @pytest.mark.parametrize("index", [0, 2, 5, 12, 18])
+    def test_set_index(self, length, index):
+        chain = brutesleuth.OctalChain(length)
+        chain.setIndex(index)
+        assert chain.__next__() == f"{index:0{length:d}o}"
+
+    def test_incremental_result(self, length):
+        chain = brutesleuth.OctalChain(length)
+        chain.setIndex(0)
+        for result, expected in zip(chain, map(
+                lambda i: f"{i:0{length:d}o}", range(2 ** length))):
+            assert result == expected
+
+
+@pytest.mark.parametrize("length", [
+    4, 5, 6, 8, 10, 20
+])
+class TestBinaryChain:
+    def test_length(self, length):
+        chain = brutesleuth.BinaryChain(length)
+        assert len(chain) == 2 ** length
+
+    @pytest.mark.parametrize("index", [0, 2, 5, 12, 15])
+    def test_set_index(self, length, index):
+        chain = brutesleuth.BinaryChain(length)
+        chain.setIndex(index)
+        assert chain.__next__() == f"{index:0{length:d}b}"
+
+    def test_incremental_result(self, length):
+        chain = brutesleuth.BinaryChain(length)
+        chain.setIndex(0)
+        for result, expected in zip(chain, map(
+                lambda i: f"{i:0{length:d}b}", range(2 ** length))):
+            assert result == expected
+
+
+@pytest.mark.skip(reason="WIP need to complete")
+class TestIterativeProduct:
+    def test_length(self, iterators):
+        iter_chain = brutesleuth.iterative_product(*iterators)
+        length = 1
+        for i in iterators:
+            length *= len(i)
+        assert len(iter_chain) == length
+
+    @pytest.mark.skip(
+        reason="WIP still need to figure out how to configure this")
+    def test_incremental_result(self, iterators):
+        pass
+
+
+@pytest.mark.skip(reason="WIP need to complete")
+class TestBruteListChain:
+    def test_length(self, fstring, gens):
+        brutelist_chain = brutesleuth.BruteListChain(fstring, gens)
+        length = 1
+        for i in gens:
+            length *= len(i)
+        assert len(brutelist_chain) == length
+
+    @pytest.mark.skip(
+        reason="WIP still need to figure out how to configure this")
+    def test_incremental_result(self, fstring, gens):
+        pass
 
 # Testing handler functions
 
