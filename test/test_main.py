@@ -226,8 +226,9 @@ def test_get_string_variations(format_string, real_string, expected_results):
 
 @pytest.mark.parametrize("format_string,set_string", [
     ("SKY-{4aA}-{4d}", "SKY-Aefa-0146"),
-    # ("Password{:2d}", "Password83"),
-    # ("Binary{:04b}", "Binary0100")
+    ("Hash{:02d}-{:04b}", "Hash02-1100"),
+    ("Password{:2d}", "Password83"),
+    ("Binary{:04b}", "Binary0100")
 ])
 def test_set_position(format_string, set_string):
     format_frame, gens = brutesleuth.init_formatting(format_string)
