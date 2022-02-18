@@ -40,6 +40,11 @@ class TestBaseChain:
         for result, expected in zip(chain, range(base ** length)):
             assert result == expected
 
+    def test_get_random(self, length, base):
+        chain = brutesleuth.BaseChain(base, length)
+        for i in range(10):
+            assert(0 <= chain.getRandom() < base ** length)
+
 
 @pytest.mark.parametrize("length", [
     2, 3, 5, 8, 10
@@ -61,6 +66,11 @@ class TestDecimalChain:
         for result, expected in zip(chain, map(
                 lambda i: f"{i:0{length:d}d}", range(2 ** length))):
             assert result == expected
+
+    def test_get_random(self, length):
+        chain = brutesleuth.DecimalChain(length)
+        for i in range(10):
+            assert(0 <= int(chain.getRandom(), 10) < 10 ** length)
 
 
 @pytest.mark.parametrize("length", [
@@ -84,6 +94,11 @@ class TestHexadecimalChain:
                 lambda i: f"{i:0{length:d}x}", range(2 ** length))):
             assert result == expected
 
+    def test_get_random(self, length):
+        chain = brutesleuth.HexadecimalChain(length)
+        for i in range(10):
+            assert(0 <= int(chain.getRandom(), 16) < 16 ** length)
+
 
 @pytest.mark.parametrize("length", [
     2, 3, 5, 8, 20
@@ -106,6 +121,11 @@ class TestOctalChain:
                 lambda i: f"{i:0{length:d}o}", range(2 ** length))):
             assert result == expected
 
+    def test_get_random(self, length):
+        chain = brutesleuth.OctalChain(length)
+        for i in range(10):
+            assert(0 <= int(chain.getRandom(), 8) < 8 ** length)
+
 
 @pytest.mark.parametrize("length", [
     4, 5, 6, 8, 10, 20
@@ -127,6 +147,11 @@ class TestBinaryChain:
         for result, expected in zip(chain, map(
                 lambda i: f"{i:0{length:d}b}", range(2 ** length))):
             assert result == expected
+
+    def test_get_random(self, length):
+        chain = brutesleuth.BinaryChain(length)
+        for i in range(10):
+            assert(0 <= int(chain.getRandom(), 2) < 2 ** length)
 
 
 @pytest.mark.skip(reason="WIP need to complete")
@@ -200,8 +225,9 @@ def test_get_string_variations(format_string, real_string, expected_results):
 
 @pytest.mark.parametrize("format_string,set_string", [
     ("SKY-{4aA}-{4d}", "SKY-Aefa-0146"),
-    # ("Password{:2d}", "Password83"),
-    # ("Binary{:04b}", "Binary0100")
+    ("Hash{:02d}-{:04b}", "Hash02-1100"),
+    ("Password{:2d}", "Password83"),
+    ("Binary{:04b}", "Binary0100")
 ])
 def test_set_position(format_string, set_string):
     format_frame, gens = brutesleuth.init_formatting(format_string)

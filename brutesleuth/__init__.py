@@ -196,7 +196,15 @@ class DecimalChain(BaseChain):
         super().__init__(10, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}d}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the decimalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}d}"
 
 
 class HexadecimalChain(BaseChain):
@@ -216,7 +224,15 @@ class HexadecimalChain(BaseChain):
         super().__init__(16, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}x}"
+        return f"{super().__next__():0{self.length:d}x}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the hexadecimalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}x}"
 
 
 class OctalChain(BaseChain):
@@ -236,7 +252,15 @@ class OctalChain(BaseChain):
         super().__init__(8, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}o}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the octalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}o}"
 
 
 class BinaryChain(BaseChain):
@@ -256,7 +280,15 @@ class BinaryChain(BaseChain):
         super().__init__(2, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}b}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the binarychain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}b}"
 
 
 class iterative_product:
@@ -551,12 +583,16 @@ def set_position(format_string: str, starting_string: str,
     # Collecting variations between generators
     values = get_string_variations(format_string, starting_string)
 
+    # pack values anyway if its only a string
+    if type(values) is str:
+        values = values,
+
     # setting each portion
     for i in range(len(generators)):
         if type(generators[i]) == BruteChain:
             generators[i].setIndex(values[i])
         else:
-            generators[i].setIndex(int(values[i]))
+            generators[i].setIndex(int(values[i], generators[i].base))
 
     return generators
 
