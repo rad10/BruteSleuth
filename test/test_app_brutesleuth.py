@@ -11,7 +11,7 @@ def test_bin_basecase():
     format_string = "{4d}"
     result = "\n".join([f"{a:04d}" for a in range(10 ** 4)])+"\n"
     assert result == subprocess.check_output(
-        ["/usr/bin/python3", bin_location, format_string]).decode("utf-8")
+        [bin_location, format_string]).decode("utf-8")
 
 
 def test_bin_length():
@@ -19,7 +19,7 @@ def test_bin_length():
     format_string = "SKY-{4a}-{4d}"
     result = "\n".join([f"SKY-aaaa-{a:04d}" for a in range(length)])+"\n"
     assert result == subprocess.check_output(
-        ["/usr/bin/python3", bin_location, format_string, "-l", str(length)]).decode("utf-8")
+        [bin_location, format_string, "-l", str(length)]).decode("utf-8")
 
 
 def test_bin_setpoint():
@@ -29,7 +29,7 @@ def test_bin_setpoint():
     result = "\n".join([format_string.format(start_num + a)
                         for a in range(length)])+"\n"
     assert result == subprocess.check_output(
-        ["/usr/bin/python3", bin_location, "SKY-{4a}-{4d}", "-l", str(length), "-s",
+        [bin_location, "SKY-{4a}-{4d}", "-l", str(length), "-s",
          format_string.format(start_num)]).decode("utf-8")
 
 
@@ -37,7 +37,7 @@ def test_bin_random():
     format_string = "SKY-{4aA}-{4d}"
     internal_format = brutesleuth.init_formatting(format_string)[0]
     tool_output = subprocess.check_output(
-        ["/usr/bin/python3", bin_location, format_string, "--random"]).decode("utf-8").rstrip()
+        [bin_location, format_string, "--random"]).decode("utf-8").rstrip()
     brutesleuth.get_string_variations(internal_format, tool_output)
 
 
@@ -45,7 +45,7 @@ def test_bin_mask():
     format_string = "SKY-{4aA}-{4d}"
     mask = "?l?u,SKY-?1?1?1?1-?d?d?d?d"
     tool_output = subprocess.check_output(
-        ["/usr/bin/python3", bin_location, format_string, "--mask"]).decode("utf-8").rstrip()
+        [bin_location, format_string, "--mask"]).decode("utf-8").rstrip()
     assert tool_output == mask
 
 
@@ -53,7 +53,7 @@ def test_root_basecase():
     format_string = "{4d}"
     result = "\n".join([f"{a:04d}" for a in range(10 ** 4)])+"\n"
     assert result == subprocess.check_output(
-        ["/usr/bin/python3", root_location, format_string]).decode("utf-8")
+        [root_location, format_string]).decode("utf-8")
 
 
 def test_root_length():
@@ -79,7 +79,7 @@ def test_root_random():
     format_string = "SKY-{4aA}-{4d}"
     internal_format = brutesleuth.init_formatting(format_string)[0]
     tool_output = subprocess.check_output(
-        ["/usr/bin/python3", root_location, format_string, "--random"]).decode("utf-8").rstrip()
+        [root_location, format_string, "--random"]).decode("utf-8").rstrip()
     brutesleuth.get_string_variations(internal_format, tool_output)
 
 
@@ -87,5 +87,5 @@ def test_root_mask():
     format_string = "SKY-{4aA}-{4d}"
     mask = "?l?u,SKY-?1?1?1?1-?d?d?d?d"
     tool_output = subprocess.check_output(
-        ["/usr/bin/python3", root_location, format_string, "--mask"]).decode("utf-8").rstrip()
+        [root_location, format_string, "--mask"]).decode("utf-8").rstrip()
     assert tool_output == mask
