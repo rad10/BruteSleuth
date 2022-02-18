@@ -583,6 +583,10 @@ def set_position(format_string: str, starting_string: str,
     # Collecting variations between generators
     values = get_string_variations(format_string, starting_string)
 
+    # pack values anyway if its only a string
+    if type(values) is str:
+        values = values,
+
     # setting each portion
     for i in range(len(generators)):
         if type(generators[i]) == BruteChain:
