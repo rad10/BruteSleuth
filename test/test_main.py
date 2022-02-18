@@ -16,7 +16,6 @@ class TestBruteChain:
     @pytest.mark.skip(reason="WIP need to complete")
     def test_incremental_result(self, length, iters):
         pass
-# Testing functions of Base chain chains
 
 
 @pytest.mark.parametrize("length,base", [
