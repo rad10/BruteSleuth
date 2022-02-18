@@ -198,6 +198,14 @@ class DecimalChain(BaseChain):
     def __next__(self) -> str:
         return f"{super().__next__():0{self.length:d}d}"
 
+    def getRandom(self) -> str:
+        """Returns a random configuration of the decimalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}d}"
+
 
 class HexadecimalChain(BaseChain):
     """ Hexadecimal Chain is an iterative class that provides every permutative
@@ -217,6 +225,14 @@ class HexadecimalChain(BaseChain):
 
     def __next__(self) -> str:
         return f"{super().__next__():0{self.length:d}x}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the hexadecimalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}x}"
 
 
 class OctalChain(BaseChain):
@@ -238,6 +254,14 @@ class OctalChain(BaseChain):
     def __next__(self) -> str:
         return f"{super().__next__():0{self.length:d}o}"
 
+    def getRandom(self) -> str:
+        """Returns a random configuration of the octalchain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}o}"
+
 
 class BinaryChain(BaseChain):
     """ Binary Chain is an iterative class that provides every permutative
@@ -257,6 +281,14 @@ class BinaryChain(BaseChain):
 
     def __next__(self) -> str:
         return f"{super().__next__():0{self.length:d}b}"
+
+    def getRandom(self) -> str:
+        """Returns a random configuration of the binarychain. This can be useful
+        if used to implement a monkey sort brute forcer, or to create a random
+        password based on rulesets
+        """
+        # Creating random values in memory
+        return f"{randrange(0, self.__len__()):0{self.length:d}b}"
 
 
 class iterative_product:
