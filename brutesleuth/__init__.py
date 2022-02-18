@@ -196,7 +196,7 @@ class DecimalChain(BaseChain):
         super().__init__(10, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}d}"
 
 
 class HexadecimalChain(BaseChain):
@@ -216,7 +216,7 @@ class HexadecimalChain(BaseChain):
         super().__init__(16, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}x}"
+        return f"{super().__next__():0{self.length:d}x}"
 
 
 class OctalChain(BaseChain):
@@ -236,7 +236,7 @@ class OctalChain(BaseChain):
         super().__init__(8, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}o}"
 
 
 class BinaryChain(BaseChain):
@@ -256,7 +256,7 @@ class BinaryChain(BaseChain):
         super().__init__(2, length)
 
     def __next__(self) -> str:
-        return f"{super().__next__():0{self.length}d}"
+        return f"{super().__next__():0{self.length:d}b}"
 
 
 class iterative_product:
