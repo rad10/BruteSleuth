@@ -48,5 +48,9 @@
     "python.linting.ignorePatterns": [
         ".vscode/*.py",
         "**/site-packages/**/*.py",
-    ]
+    ],
+    "python.testing.pytestArgs": [],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.autoTestDiscoverOnSaveEnabled": true
 }
