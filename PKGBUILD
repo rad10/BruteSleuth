@@ -8,7 +8,7 @@
 
 # Maintainer: Nick Cottrell <ncottrellweb@gmail.com>
 pkgname=python-brutesleuth-git # '-bzr', '-git', '-hg' or '-svn'
-pkgver=1.4.0
+pkgver=1.4.3
 pkgrel=1
 pkgdesc="Making bruteforce wordlists smarter, not harder"
 arch=('any')
