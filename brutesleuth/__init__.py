@@ -588,7 +588,7 @@ def set_position(format_string: str, starting_string: str,
         if type(generators[i]) == BruteChain:
             generators[i].setIndex(values[i])
         else:
-            generators[i].setIndex(int(values[i]))
+            generators[i].setIndex(int(values[i], generators[i].base))
 
     return generators
 
