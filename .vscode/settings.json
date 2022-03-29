@@ -8,6 +8,10 @@
     "editor.tabSize": 4,
     "editor.trimAutoWhitespace": true,
     "editor.useTabStops": true,
+    "editor.unicodeHighlight.includeComments": true,
+    "editor.unicodeHighlight.ambiguousCharacters": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "editor.unicodeHighlight.nonBasicASCII": true,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "[diff]": {
